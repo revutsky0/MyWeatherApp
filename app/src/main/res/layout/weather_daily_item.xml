@@ -6,48 +6,103 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:background="@color/main_current_temperature_background"
-    app:cardCornerRadius="15dp">
+
+>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/main_current_temperature_background">
+        android:background="@color/main_weekly_weather_background"
+        android:padding="5dp">
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
+            android:id="@+id/tvItemDayOfWeek"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="Чт"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineItem25"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvItemWindSpeed"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:gravity="center"
+            android:text="5-10"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guidelineItem85"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/btn_star_big_on" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/view"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineItem85"
+            app:layout_constraintStart_toEndOf="@+id/tvItemDayOfWeek"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvItemDate"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="01.01.2000"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tvItemDayNightTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:textColor="@color/white" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tvItemWindUnits"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="м/с"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guidelineItem85"
+            app:layout_constraintTop_toBottomOf="@+id/tvItemWindSpeed" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineItem25"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="61dp"
+            app:layout_constraintGuide_percent="0.15" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineItem85"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="298dp"
+            app:layout_constraintGuide_percent="0.85" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView2"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="@id/guidelineItem85"
+            app:layout_constraintStart_toStartOf="@id/guidelineItem25" />
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

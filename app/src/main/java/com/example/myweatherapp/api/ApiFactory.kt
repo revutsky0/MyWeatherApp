@@ -6,8 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiFactory {
 
-    private const val BASE_URL = ""
-
+    private const val BASE_URL = "https://api.openweathermap.org/"
     private val retrofit = Retrofit.Builder()
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())

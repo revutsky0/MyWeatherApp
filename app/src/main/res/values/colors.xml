@@ -7,6 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="main_current_temperature_background">#F0F0F0</color>
+    <color name="main_current_temperature_background">#AAF0F0F0</color>
+    <color name="card_view_bg">#00F0F0F0</color>
+    <color name="main_weekly_weather_background">#272643</color>
 
 </resources>
