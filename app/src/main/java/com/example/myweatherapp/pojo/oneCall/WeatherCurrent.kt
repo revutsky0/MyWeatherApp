@@ -1,11 +1,20 @@
 package com.example.myweatherapp.pojo.oneCall
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.example.myweatherapp.pojo.WeatherConverter
 import com.google.gson.annotations.Expose
 
 import com.google.gson.annotations.SerializedName
 
-
+@Entity(tableName = "weather_current")
+@TypeConverters(WeatherConverter::class)
 data class WeatherCurrent(
+
+    @PrimaryKey(autoGenerate = true)
+    val id : Int,
+
     @SerializedName("dt")
     @Expose
     val dt: Int? = null,
@@ -74,7 +83,7 @@ data class WeatherCurrent(
     fun getWeatherStatus() : String {
         if (weather==null||weather.isEmpty()) return ""
         val weatherItem = weather[0]
-        return weatherItem.description?:""
+        return weatherItem.description?.replaceFirstChar { char -> char.uppercase() }?:""
     }
 
 }

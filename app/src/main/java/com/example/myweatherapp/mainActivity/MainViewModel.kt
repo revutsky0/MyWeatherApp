@@ -1,21 +1,16 @@
-package com.example.myweatherapp
+package com.example.myweatherapp.mainActivity
 
 import android.app.Application
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
 import com.example.myweatherapp.api.ApiFactory
-import com.example.myweatherapp.pojo.DataCity
-import com.example.myweatherapp.pojo.oneCall.WeatherCurrent
-import com.example.myweatherapp.pojo.oneCall.WeatherDaily
+import com.example.myweatherapp.database.WeatherDatabase
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
-import javax.security.auth.callback.Callback
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -25,11 +20,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         const val PREFERENCES_CITY_LON = "CityLon"
     }
 
+    val database = WeatherDatabase.getInstance(application)
     val compositeDisposable = CompositeDisposable()
     var disposableCity: Disposable? = null
     var disposableData: Disposable? = null
-    val currentWeather = MutableLiveData<WeatherCurrent?>()
-    val weeklyWeather = MutableLiveData<List<WeatherDaily>>()
+    val currentWeather = database.dao().getCurrentWeather()
+    val weeklyWeather = database.dao().getDailyWeather()
     val preferences =
         application.getSharedPreferences("WeatherSettings", AppCompatActivity.MODE_PRIVATE)
     var cityName: String?
@@ -64,8 +60,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             .repeat()
             .subscribeOn(Schedulers.io())
             .subscribe({
-                it.current?.let { currentWeather.postValue(it) }
-                it.daily?.let { weeklyWeather.postValue(it) }
+                it.current?.let {
+                    database.dao().deleteCurrentWeather()
+                    database.dao().insertCurrentWeather(it)
+                }
+                it.daily?.let {
+                    database.dao().deleteDailyWeather()
+                    database.dao().insertDailyWeather(it)
+                }
                 Log.d("MyApp", "Message = $it")
             }, {
                 Log.d("MyApp", "subscribe error = ${it.message}")
@@ -94,11 +96,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     }
                 } else {
                     Log.d("MyApp","city = null")
-                    currentWeather.postValue(null)
+
                 }
 
             }, {
-                currentWeather.postValue(null)
+
                 Log.d("MyApp", "find city error : ${it.message}")
             })
         compositeDisposable.add(disposableCity)

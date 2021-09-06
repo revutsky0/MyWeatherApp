@@ -1,13 +1,24 @@
 package com.example.myweatherapp.pojo.oneCall
 
 import android.util.Log
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
 import com.google.gson.annotations.Expose
 
 import com.google.gson.annotations.SerializedName
 import com.example.myweatherapp.getDateFromStamp
 import com.example.myweatherapp.getDayOfWeekFromStamp
+import com.example.myweatherapp.pojo.WeatherConverter
 
+@Entity(tableName = "weather_daily")
+@TypeConverters(WeatherConverter::class)
 data class WeatherDaily(
+
+    @PrimaryKey(autoGenerate = true)
+    val id : Int,
+
     @SerializedName("dt")
     @Expose
     val dt: Long? = null,
@@ -84,16 +95,11 @@ data class WeatherDaily(
             return "none"
         }
         val item = weather[0]
-        return item.description ?: "none"
+        return item.description?.replaceFirstChar { char -> char.uppercase() }?:""
     }
 
     fun getDate() = getDateFromStamp(dt)
 
-    fun getWindSpeed() : String {
-        windSpeed?.let { return "$it" }
-        return ""
-    }
-
-    fun getDayOfWeek() = getDayOfWeekFromStamp(dt).capitalize()
+    fun getDayOfWeek() = getDayOfWeekFromStamp(dt).replaceFirstChar { char -> char.uppercase() }
 
 }
