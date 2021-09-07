@@ -1,27 +1,21 @@
 package com.example.myweatherapp.pojo.oneCall
 
-import android.util.Log
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
 import androidx.room.TypeConverters
-import com.google.gson.annotations.Expose
-
-import com.google.gson.annotations.SerializedName
 import com.example.myweatherapp.getDateFromStamp
-import com.example.myweatherapp.getDayOfWeekFromStamp
 import com.example.myweatherapp.pojo.WeatherConverter
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+import java.util.*
 
 @Entity(tableName = "weather_daily")
 @TypeConverters(WeatherConverter::class)
 data class WeatherDaily(
 
-    @PrimaryKey(autoGenerate = true)
-    val id : Int,
-
     @SerializedName("dt")
     @Expose
-    val dt: Long? = null,
+    val dt: Long,
 
     @SerializedName("sunrise")
     @Expose
@@ -81,8 +75,24 @@ data class WeatherDaily(
 
     @SerializedName("clouds")
     @Expose
-    val clouds: Int? = null
+    val clouds: Int? = null,
+
+    @SerializedName("pop")
+    @Expose
+    val pop: Double? = null
+
+
 ) {
+
+    @PrimaryKey(autoGenerate = false)
+    var id: Int
+
+    init {
+        val calendar = Calendar.getInstance()
+        calendar.time = Date(dt * 1000)
+        id = calendar.get(Calendar.DAY_OF_WEEK)
+    }
+
     fun getDayNightTemp(): String {
         temp?.let {
             return "${it.day ?: "0"}°C / ${temp.night ?: '0'}°C"
@@ -95,11 +105,21 @@ data class WeatherDaily(
             return "none"
         }
         val item = weather[0]
-        return item.description?.replaceFirstChar { char -> char.uppercase() }?:""
+        return item.description?.replaceFirstChar { char -> char.uppercase() } ?: ""
     }
 
     fun getDate() = getDateFromStamp(dt)
 
-    fun getDayOfWeek() = getDayOfWeekFromStamp(dt).replaceFirstChar { char -> char.uppercase() }
+    fun getDayOfWeek() =
+        id.toString()//getDayOfWeekFromStamp(dt).replaceFirstChar { char -> char.uppercase() }
 
+    fun getCloudsValue() = "${clouds ?: 0} %"
+
+    fun getPressures() = "${pressure ?: 0} mbar"
+
+    fun getWind() = "${windSpeed ?: 0} m/s"
+
+    fun getPrecipitation() = "${(pop ?: 0 * 100).toInt()}%"
+
+    fun getHumidityValue() = "${humidity?:0} %"
 }

@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">MyWeatherApp</string>
+    <string name="details_humidity_label">Влажность</string>
+    <string name="details_clouds_label">Облачность</string>
+    <string name="details_precipitation_label">Осадки</string>
+    <string name="details_precipitation_icon_description">Иконка осадков</string>
+    <string name="details_clouds_icon_description">Иконка облачности</string>
+    <string name="details_humidity_icon_description">Иконка влажности</string>
+    <string name="details_wind_icon_description">Иконка ветра</string>
+    <string name="details_pressure_icon_description">Иконка давления</string>
+    <string name="details_windmills_description">Картинка с ветряными мельницами</string>
+    <string name="details_wind_and_pressure_label">Ветер и давление</string>
+    <string name="main_enter_city_name_hint">Введите название города</string>
+    <string name="main_forecast_on_week_label">Прогноз на неделю</string>
+    <string name="main_find_city_button_description">Кнопка поиска города</string>
 </resources>

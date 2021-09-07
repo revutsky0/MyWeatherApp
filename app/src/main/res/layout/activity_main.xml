@@ -11,13 +11,14 @@
         android:id="@+id/cardViewCurrentWeather"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
         android:minWidth="170dp"
         android:padding="5dp"
         app:cardCornerRadius="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineHalfScreen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constLayoutFindCity">
+        app:layout_constraintTop_toBottomOf="@+id/constLayoutFindCity"
+        app:layout_constraintVertical_bias="0.29000002">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -30,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="11°C"
+                tools:text="11°C"
                 android:textColor="@color/black"
                 android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -38,11 +39,11 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tvDayNightTemterature"
+                android:id="@+id/tvDayNightTemperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="11°C / 5°C"
+                tools:text="11°C / 5°C"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -53,11 +54,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Облачно"
+                tools:text="Облачно"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDayNightTemterature" />
+                app:layout_constraintTop_toBottomOf="@+id/tvDayNightTemperature" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
@@ -85,14 +86,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_search" />
+            app:srcCompat="@android:drawable/ic_menu_search"
+            android:contentDescription="@string/main_find_city_button_description"/>
 
         <EditText
             android:id="@+id/etCity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Введите название города"
+            android:hint="@string/main_enter_city_name_hint"
             android:inputType="textPersonName"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -138,7 +140,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="3dp"
-        android:text="Прогноз на неделю"
+        android:text="@string/main_forecast_on_week_label"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,23 +1,22 @@
 package com.example.myweatherapp.pojo.oneCall
 
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.myweatherapp.pojo.WeatherConverter
 import com.google.gson.annotations.Expose
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 @Entity(tableName = "weather_current")
 @TypeConverters(WeatherConverter::class)
 data class WeatherCurrent(
 
-    @PrimaryKey(autoGenerate = true)
-    val id : Int,
-
     @SerializedName("dt")
     @Expose
-    val dt: Int? = null,
+    val dt: Long,
 
     @SerializedName("sunrise")
     @Expose
@@ -75,15 +74,29 @@ data class WeatherCurrent(
     @Expose
     val weather: List<WeatherDetails>? = null
 ) {
-    fun getTemperature() : String {
+
+    @PrimaryKey(autoGenerate = false)
+    var id: Int = 1
+    set(value) {
+        val calendar = Calendar.getInstance()
+        calendar.time = Date(dt * 1000)
+        field = calendar.get(Calendar.DAY_OF_WEEK)
+    }
+    init {
+        val calendar = Calendar.getInstance()
+        calendar.time = Date(dt * 1000)
+        id = calendar.get(Calendar.DAY_OF_WEEK)
+    }
+
+    fun getTemperature(): String {
         temp?.let { return "$temp°C" }
         return "0"
     }
 
-    fun getWeatherStatus() : String {
-        if (weather==null||weather.isEmpty()) return ""
+    fun getWeatherStatus(): String {
+        if (weather == null || weather.isEmpty()) return ""
         val weatherItem = weather[0]
-        return weatherItem.description?.replaceFirstChar { char -> char.uppercase() }?:""
+        return weatherItem.description?.replaceFirstChar { char -> char.uppercase() } ?: ""
     }
 
 }

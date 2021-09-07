@@ -61,11 +61,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             .subscribeOn(Schedulers.io())
             .subscribe({
                 it.current?.let {
-                    database.dao().deleteCurrentWeather()
+                    //database.dao().deleteCurrentWeather()
                     database.dao().insertCurrentWeather(it)
                 }
                 it.daily?.let {
-                    database.dao().deleteDailyWeather()
+                    //database.dao().deleteDailyWeather()
                     database.dao().insertDailyWeather(it)
                 }
                 Log.d("MyApp", "Message = $it")

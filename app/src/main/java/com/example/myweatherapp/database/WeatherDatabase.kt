@@ -9,7 +9,7 @@ import com.example.myweatherapp.pojo.oneCall.WeatherDaily
 
 @Database(
     entities = [WeatherDaily::class, WeatherCurrent::class],
-    version = 1,
+    version = 8,
     exportSchema = false
 )
 abstract class WeatherDatabase() : RoomDatabase() {
@@ -23,7 +23,8 @@ abstract class WeatherDatabase() : RoomDatabase() {
             synchronized(LOCK) {
                 database?.let { return it }
                 val instance =
-                    Room.databaseBuilder(context, WeatherDatabase::class.java, DB_NAME).build()
+                    Room.databaseBuilder(context, WeatherDatabase::class.java, DB_NAME)
+                        .fallbackToDestructiveMigration().build()
                 database = instance
                 return instance
             }

@@ -1,6 +1,7 @@
 package com.example.myweatherapp.mainActivity
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,7 +46,8 @@ class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.WeeklyWeatherViewHolder
         val tvWingSpeed: TextView by lazy { itemView.findViewById(R.id.tvItemWindSpeed) }
         init {
             itemView.setOnClickListener{
-                val intent = Intent(itemView.context, WeatherDetailActivity::class.java)
+                Log.d("MyApp","id = $id")
+                val intent = WeatherDetailActivity.getIntent(itemView.context,id)
                 itemView.context.startActivity(intent)
             }
         }
