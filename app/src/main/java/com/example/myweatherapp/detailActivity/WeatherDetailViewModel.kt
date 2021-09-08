@@ -8,7 +8,7 @@ import com.example.myweatherapp.pojo.oneCall.WeatherDaily
 
 class WeatherDetailViewModel(application: Application) : AndroidViewModel(application) {
 
-    val database = WeatherDatabase.getInstance(application)
+    private val database = WeatherDatabase.getInstance(application)
     lateinit var weather: LiveData<WeatherDaily>
 
     fun getWeather(id: Int): LiveData<WeatherDaily> {

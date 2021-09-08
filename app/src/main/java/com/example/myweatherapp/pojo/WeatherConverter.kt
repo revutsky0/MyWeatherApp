@@ -6,7 +6,6 @@ import com.example.myweatherapp.pojo.oneCall.Temp
 import com.example.myweatherapp.pojo.oneCall.WeatherDetails
 import com.google.gson.Gson
 import org.json.JSONArray
-import org.json.JSONObject
 
 class WeatherConverter {
 
@@ -31,26 +30,26 @@ class WeatherConverter {
     }
 
     @TypeConverter
-    fun fromWeatherDetails(weatherDetails: WeatherDetails) : String {
+    fun fromWeatherDetails(weatherDetails: WeatherDetails): String {
         return Gson().toJson(weatherDetails)
     }
 
     @TypeConverter
-    fun toWeatherDetails(weatherDetails: String) : WeatherDetails {
+    fun toWeatherDetails(weatherDetails: String): WeatherDetails {
         return Gson().fromJson(weatherDetails, WeatherDetails::class.java)
     }
 
     @TypeConverter
-    fun fromWeatherDetailsList(list : List<WeatherDetails>) : String {
+    fun fromWeatherDetailsList(list: List<WeatherDetails>): String {
         return Gson().toJson(list)
     }
 
     @TypeConverter
-    fun toWeatherDetailsList(list : String) : List<WeatherDetails> {
+    fun toWeatherDetailsList(list: String): List<WeatherDetails> {
         val result = mutableListOf<WeatherDetails>()
         val array = JSONArray(list)
-        for(index: Int in 0 until array.length()) {
-            val item = Gson().fromJson(array[index].toString(),WeatherDetails::class.java)
+        for (index: Int in 0 until array.length()) {
+            val item = Gson().fromJson(array[index].toString(), WeatherDetails::class.java)
             result.add(item)
         }
         return result

@@ -42,8 +42,8 @@ class WeatherDetailActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[WeatherDetailViewModel::class.java]
         weather = viewModel.getWeather(id)
         weather.observe(this, {
-            //it?.let {
-            tvDayAndDate.text = "${it.getDayOfWeek()} ${it.getDate()}"
+            it?.let {
+            tvDayAndDate.text = it.getDayAndDate()
             tvDayNightTemp.text = it.getDayNightTemp()
             tvStatus.text = it.getWeatherDescription()
             tvClouds.text = it.getCloudsValue()
@@ -51,7 +51,7 @@ class WeatherDetailActivity : AppCompatActivity() {
             tvPrecipitation.text = it.getPrecipitation()
             tvWind.text = it.getWind()
             tvPressure.text = it.getPressures()
-            //}
+            }
         })
 
     }

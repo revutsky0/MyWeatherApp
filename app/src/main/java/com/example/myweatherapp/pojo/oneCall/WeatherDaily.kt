@@ -4,14 +4,18 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.myweatherapp.getDateFromStamp
+import com.example.myweatherapp.getDayOfWeekFromStamp
+import com.example.myweatherapp.getDayAndDateFromStamp
 import com.example.myweatherapp.pojo.WeatherConverter
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import java.util.*
 
 @Entity(tableName = "weather_daily")
 @TypeConverters(WeatherConverter::class)
 data class WeatherDaily(
+
+    @PrimaryKey
+    var id: Int = 0,
 
     @SerializedName("dt")
     @Expose
@@ -84,21 +88,16 @@ data class WeatherDaily(
 
 ) {
 
-    @PrimaryKey(autoGenerate = false)
-    var id: Int
-
-    init {
-        val calendar = Calendar.getInstance()
-        calendar.time = Date(dt * 1000)
-        id = calendar.get(Calendar.DAY_OF_WEEK)
-    }
-
     fun getDayNightTemp(): String {
         temp?.let {
-            return "${it.day ?: "0"}°C / ${temp.night ?: '0'}°C"
+            return "${it.day ?: "0"}° / ${temp.night ?: '0'}°"
         }
         return ""
     }
+
+    fun getDayTemp() = "${temp?.day ?: "0"}°"
+
+    fun getNightTemp() = "${temp?.night ?: "0"}°"
 
     fun getWeatherDescription(): String {
         if (weather == null || weather.isEmpty()) {
@@ -111,7 +110,9 @@ data class WeatherDaily(
     fun getDate() = getDateFromStamp(dt)
 
     fun getDayOfWeek() =
-        id.toString()//getDayOfWeekFromStamp(dt).replaceFirstChar { char -> char.uppercase() }
+        getDayOfWeekFromStamp(dt).replaceFirstChar { char -> char.uppercase() }
+
+    fun getDayAndDate() = getDayAndDateFromStamp(dt)
 
     fun getCloudsValue() = "${clouds ?: 0} %"
 
@@ -121,5 +122,5 @@ data class WeatherDaily(
 
     fun getPrecipitation() = "${(pop ?: 0 * 100).toInt()}%"
 
-    fun getHumidityValue() = "${humidity?:0} %"
+    fun getHumidityValue() = "${humidity ?: 0} %"
 }

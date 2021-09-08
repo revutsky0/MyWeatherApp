@@ -1,6 +1,5 @@
 package com.example.myweatherapp.mainActivity
 
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -39,7 +38,7 @@ class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.WeeklyWeatherViewHolder
     }
 
     class WeeklyWeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var id : Int = 0;
+        var id : Int = 0
         val tvDayNightTemp: TextView by lazy { itemView.findViewById(R.id.tvItemDayNightTemp) }
         val tvDate: TextView by lazy { itemView.findViewById(R.id.tvItemDate) }
         val tvDayOfWeek: TextView by lazy { itemView.findViewById(R.id.tvItemDayOfWeek) }

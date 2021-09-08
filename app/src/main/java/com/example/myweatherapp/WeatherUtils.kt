@@ -1,15 +1,20 @@
 package com.example.myweatherapp
 
-import android.icu.util.LocaleData
 import java.text.SimpleDateFormat
-import java.time.DayOfWeek
-import java.time.LocalDate
 import java.util.*
-import java.util.regex.Pattern
+
+private val calendar = Calendar.getInstance()
 
 fun getDateFromStamp(stamp : Long?) = getFromStamp(stamp,"dd:MM:yyyy")
 
 fun getDayOfWeekFromStamp(stamp: Long?) = getFromStamp(stamp,"E")
+
+fun getDayAndDateFromStamp(stamp: Long?) = getFromStamp(stamp,"EEEE, d MMMM")
+
+fun getDayOfWeekNumber(date : Long) : Int {
+    calendar.time = Date(date * 1000)
+    return calendar.get(Calendar.DAY_OF_WEEK)
+}
 
 private fun getFromStamp(stamp: Long? ,pattern: String) : String {
     if (stamp==null) {

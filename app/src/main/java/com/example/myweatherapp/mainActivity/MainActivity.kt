@@ -15,11 +15,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     private val etCity: TextView by lazy { findViewById(R.id.etCity) }
     private val ibFindCity: ImageButton by lazy { findViewById(R.id.ibFindCity) }
-    private val tvCurrentTemperature: TextView by lazy { findViewById(R.id.tvCurrentTemperature) }
+    private val tvCurrentTemp: TextView by lazy { findViewById(R.id.tvCurrentTemp) }
+    private val tvDayTemp: TextView by lazy { findViewById(R.id.tvDayTemp) }
+    private val tvNightTemp: TextView by lazy { findViewById(R.id.tvNightTemp) }
     private val tvWeatherStatus: TextView by lazy { findViewById(R.id.tvWeatherStatus) }
     private val rvWeeklyWeather: RecyclerView by lazy { findViewById(R.id.rvWeeklyWeather) }
     private val adapter: WeeklyAdapter by lazy { WeeklyAdapter() }
-    private val cardViewCurrentWeather: CardView by lazy { findViewById(R.id.cardViewCurrentWeather) }
+    private val cardViewCurrentWeather: CardView by lazy { findViewById(R.id.cvCurrentWeather) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +32,9 @@ class MainActivity : AppCompatActivity() {
             {
                 it?.let {
                     cardViewCurrentWeather.visibility = View.VISIBLE
-                    tvCurrentTemperature.text = it.getTemperature()
+                    tvCurrentTemp.text = it.getTemperature()
                     tvWeatherStatus.text = it.getWeatherStatus()
+                    //tvDayTemp.text =
                 }
             }
         )

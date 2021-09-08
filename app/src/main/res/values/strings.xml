@@ -13,4 +13,7 @@
     <string name="main_enter_city_name_hint">Введите название города</string>
     <string name="main_forecast_on_week_label">Прогноз на неделю</string>
     <string name="main_find_city_button_description">Кнопка поиска города</string>
+    <string name="wind_speed_units">м/с</string>
+    <string name="day_temp_icon_description_light">Иконка погоды днем (светлая)</string>
+    <string name="night_temp_icon_description_light">Иконка погоды ночью (светлая)</string>
 </resources>

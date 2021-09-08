@@ -9,10 +9,10 @@ import com.example.myweatherapp.pojo.oneCall.WeatherDaily
 
 @Database(
     entities = [WeatherDaily::class, WeatherCurrent::class],
-    version = 8,
+    version = 1,
     exportSchema = false
 )
-abstract class WeatherDatabase() : RoomDatabase() {
+abstract class WeatherDatabase : RoomDatabase() {
 
     companion object {
         private const val DB_NAME = "WeatherDatabase.db"

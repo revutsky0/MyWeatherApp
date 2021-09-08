@@ -9,10 +9,11 @@ import com.example.myweatherapp.pojo.oneCall.WeatherDaily
 interface WeatherDao {
 
     //region WEATHER_CURRENT
+
     @Query("SELECT * FROM weather_current LIMIT 1")
     fun getCurrentWeather() : LiveData<WeatherCurrent>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCurrentWeather(weatherCurrent: WeatherCurrent)
 
     @Query("DELETE FROM weather_current")
@@ -22,7 +23,7 @@ interface WeatherDao {
 
     //region WEATHER_DAILY
 
-    @Query("SELECT * FROM weather_daily")
+    @Query("SELECT * FROM weather_daily ORDER BY dt")
     fun getDailyWeather() : LiveData<List<WeatherDaily>>
 
     @Query("SELECT * FROM weather_daily WHERE id==:id")
