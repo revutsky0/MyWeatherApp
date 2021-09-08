@@ -52,15 +52,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/tvDetailsPrecipitation" />
 
                 <ImageView
-                    android:id="@+id/ivDetailsPrecipitationIcon"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:contentDescription="@string/details_precipitation_icon_description"
-                    app:layout_constraintBottom_toTopOf="@+id/tvDetailsPrecipitation"
+                    android:id="@+id/imageView3"
+                    style="@style/details_top_icon"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:srcCompat="@drawable/precipitation" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -100,15 +98,14 @@
                     tools:text="50%" />
 
                 <ImageView
-                    android:id="@+id/ivDetailsCloudsIcon"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:contentDescription="@string/details_clouds_icon_description"
-                    app:layout_constraintBottom_toTopOf="@+id/tvDetailsClouds"
+                    android:id="@+id/imageView4"
+                    style="@style/details_top_icon"
+                    android:layout_marginTop="4dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:srcCompat="@drawable/cloudy" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -148,15 +145,13 @@
                     tools:text="50%" />
 
                 <ImageView
-                    android:id="@+id/ivDetailsHumidityIcon"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:contentDescription="@string/details_humidity_icon_description"
-                    app:layout_constraintBottom_toTopOf="@+id/tvDetailsHumidity"
+                    android:id="@+id/imageView5"
+                    style="@style/details_top_icon"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:srcCompat="@drawable/humidity" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
@@ -179,7 +174,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView11"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@drawable/windmills" />
 
         <TextView
             android:id="@+id/textView11"
@@ -206,27 +201,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/ivDetailsWindIcon"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:contentDescription="@string/details_wind_icon_description"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
-
                 <TextView
                     android:id="@+id/tvDetailsWind"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
-                    android:layout_marginTop="1dp"
                     android:gravity="center"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivDetailsWindIcon"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView6"
                     tools:text="5 м/с" />
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    style="@style/details_top_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/wind" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -250,18 +242,17 @@
                     android:gravity="center"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivDetailsPressureIcon"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView7"
                     tools:text="1000 mp" />
 
                 <ImageView
-                    android:id="@+id/ivDetailsPressureIcon"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:contentDescription="@string/details_pressure_icon_description"
+                    android:id="@+id/imageView7"
+                    style="@style/details_top_icon"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:srcCompat="@drawable/pressure" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -288,11 +279,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:gravity="center"
-                tools:text="Понедельник, 30 сентября"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Понедельник, 30 сентября" />
 
             <View
                 android:id="@+id/view2"
@@ -308,6 +300,7 @@
                 android:id="@+id/tvDetailsDayNightTemp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:textSize="36sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -321,11 +314,32 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:gravity="center"
-                tools:text="Облачно"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Облачно" />
+
+            <ImageView
+                android:id="@+id/ivDetailsDayTempIcon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvDetailsDayNightTemp"
+                app:layout_constraintEnd_toStartOf="@+id/tvDetailsDayNightTemp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvDetailsDayNightTemp"
+                app:srcCompat="@drawable/day_dark" />
+
+            <ImageView
+                android:id="@+id/ivDetailsNightTempIcon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvDetailsDayNightTemp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvDetailsDayNightTemp"
+                app:layout_constraintTop_toTopOf="@+id/tvDetailsDayNightTemp"
+                app:srcCompat="@drawable/night_dark" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

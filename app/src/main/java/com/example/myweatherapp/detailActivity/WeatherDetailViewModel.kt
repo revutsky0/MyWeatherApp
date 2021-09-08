@@ -11,8 +11,8 @@ class WeatherDetailViewModel(application: Application) : AndroidViewModel(applic
     private val database = WeatherDatabase.getInstance(application)
     lateinit var weather: LiveData<WeatherDaily>
 
-    fun getWeather(id: Int): LiveData<WeatherDaily> {
-        weather = database.dao().getDailyWeatherById(id)
+    fun getWeather(dt: Long): LiveData<WeatherDaily> {
+        weather = database.dao().getDailyWeatherByDt(dt)
         return weather
     }
 

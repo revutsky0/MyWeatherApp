@@ -11,7 +11,7 @@ interface WeatherDao {
     //region WEATHER_CURRENT
 
     @Query("SELECT * FROM weather_current LIMIT 1")
-    fun getCurrentWeather() : LiveData<WeatherCurrent>
+    fun getCurrentWeather(): LiveData<WeatherCurrent>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCurrentWeather(weatherCurrent: WeatherCurrent)
@@ -24,10 +24,13 @@ interface WeatherDao {
     //region WEATHER_DAILY
 
     @Query("SELECT * FROM weather_daily ORDER BY dt")
-    fun getDailyWeather() : LiveData<List<WeatherDaily>>
+    fun getDailyWeather(): LiveData<List<WeatherDaily>>
 
-    @Query("SELECT * FROM weather_daily WHERE id==:id")
-    fun getDailyWeatherById(id : Int) : LiveData<WeatherDaily>
+    @Query("SELECT * FROM weather_daily WHERE dt==:dt")
+    fun getDailyWeatherByDt(dt: Long): LiveData<WeatherDaily>
+
+    @Query("SELECT * FROM weather_daily WHERE dt==:dt")
+    fun getDailyWeatherByDtObj(dt: Long): WeatherDaily
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertDailyWeather(daily: WeatherDaily)

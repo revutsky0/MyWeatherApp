@@ -26,7 +26,7 @@ class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.WeeklyWeatherViewHolder
 
     override fun onBindViewHolder(holder: WeeklyWeatherViewHolder, position: Int) {
         val item = weeklyWeather[position]
-        holder.id = item.id
+        holder.id = item.dt
         holder.tvDate.text = item.getDate()
         holder.tvDayNightTemp.text = item.getDayNightTemp()
         holder.tvDayOfWeek.text = item.getDayOfWeek()
@@ -38,7 +38,7 @@ class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.WeeklyWeatherViewHolder
     }
 
     class WeeklyWeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var id : Int = 0
+        var id : Long = 0
         val tvDayNightTemp: TextView by lazy { itemView.findViewById(R.id.tvItemDayNightTemp) }
         val tvDate: TextView by lazy { itemView.findViewById(R.id.tvItemDate) }
         val tvDayOfWeek: TextView by lazy { itemView.findViewById(R.id.tvItemDayOfWeek) }

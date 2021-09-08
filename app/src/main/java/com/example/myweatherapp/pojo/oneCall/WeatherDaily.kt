@@ -6,20 +6,20 @@ import androidx.room.TypeConverters
 import com.example.myweatherapp.getDateFromStamp
 import com.example.myweatherapp.getDayOfWeekFromStamp
 import com.example.myweatherapp.getDayAndDateFromStamp
+import com.example.myweatherapp.DERGEE_STRING
 import com.example.myweatherapp.pojo.WeatherConverter
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlin.math.roundToInt
 
 @Entity(tableName = "weather_daily")
 @TypeConverters(WeatherConverter::class)
 data class WeatherDaily(
 
     @PrimaryKey
-    var id: Int = 0,
-
     @SerializedName("dt")
     @Expose
-    val dt: Long,
+    var dt: Long,
 
     @SerializedName("sunrise")
     @Expose
@@ -85,19 +85,18 @@ data class WeatherDaily(
     @Expose
     val pop: Double? = null
 
-
 ) {
 
     fun getDayNightTemp(): String {
         temp?.let {
-            return "${it.day ?: "0"}° / ${temp.night ?: '0'}°"
+            return "${it.day?.roundToInt() ?: "0"}° / ${temp.night?.roundToInt() ?: '0'}$DERGEE_STRING"
         }
         return ""
     }
 
-    fun getDayTemp() = "${temp?.day ?: "0"}°"
+    fun getDayTemp() = "${temp?.day?.roundToInt() ?: "0"}$DERGEE_STRING"
 
-    fun getNightTemp() = "${temp?.night ?: "0"}°"
+    fun getNightTemp() = "${temp?.night?.roundToInt() ?: "0"}$DERGEE_STRING"
 
     fun getWeatherDescription(): String {
         if (weather == null || weather.isEmpty()) {
@@ -109,18 +108,18 @@ data class WeatherDaily(
 
     fun getDate() = getDateFromStamp(dt)
 
-    fun getDayOfWeek() =
-        getDayOfWeekFromStamp(dt).replaceFirstChar { char -> char.uppercase() }
+    fun getDayOfWeek() = dt.toString()
+        //getDayOfWeekFromStamp(dt).replaceFirstChar { char -> char.uppercase() }
 
     fun getDayAndDate() = getDayAndDateFromStamp(dt)
 
-    fun getCloudsValue() = "${clouds ?: 0} %"
+    fun getCloudsValue() = "${clouds ?: 0}%"
 
-    fun getPressures() = "${pressure ?: 0} mbar"
+    fun getPressures() = "${pressure ?: 0}"
 
-    fun getWind() = "${windSpeed ?: 0} m/s"
+    fun getWind() = "${windSpeed?.roundToInt() ?: 0}"
 
-    fun getPrecipitation() = "${(pop ?: 0 * 100).toInt()}%"
+    fun getPrecipitation() = "${pop?.times(100)?.roundToInt() ?: 0}%"
 
-    fun getHumidityValue() = "${humidity ?: 0} %"
+    fun getHumidityValue() = "${humidity ?: 0}%"
 }

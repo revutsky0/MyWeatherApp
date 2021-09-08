@@ -9,7 +9,7 @@ import com.example.myweatherapp.pojo.oneCall.WeatherDaily
 
 @Database(
     entities = [WeatherDaily::class, WeatherCurrent::class],
-    version = 1,
+    version = 3,
     exportSchema = false
 )
 abstract class WeatherDatabase : RoomDatabase() {

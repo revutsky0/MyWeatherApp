@@ -6,9 +6,11 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myweatherapp.R
+import com.example.myweatherapp.detailActivity.WeatherDetailActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,6 +24,8 @@ class MainActivity : AppCompatActivity() {
     private val rvWeeklyWeather: RecyclerView by lazy { findViewById(R.id.rvWeeklyWeather) }
     private val adapter: WeeklyAdapter by lazy { WeeklyAdapter() }
     private val cardViewCurrentWeather: CardView by lazy { findViewById(R.id.cvCurrentWeather) }
+    private val clCurrentWeather: ConstraintLayout by lazy { findViewById(R.id.clCurrentWeather) }
+    private var id = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,10 +35,10 @@ class MainActivity : AppCompatActivity() {
         viewModel.currentWeather.observe(this,
             {
                 it?.let {
+                    id = it.dt
                     cardViewCurrentWeather.visibility = View.VISIBLE
                     tvCurrentTemp.text = it.getTemperature()
                     tvWeatherStatus.text = it.getWeatherStatus()
-                    //tvDayTemp.text =
                 }
             }
         )
@@ -45,6 +49,16 @@ class MainActivity : AppCompatActivity() {
         })
         ibFindCity.setOnClickListener {
             viewModel.loadData(etCity.text.toString())
+        }
+        viewModel.currentDailyWeather.observe(this, {
+            it?.let {
+                tvDayTemp.text = it.getDayTemp()
+                tvNightTemp.text = it.getNightTemp()
+            }
+        })
+        clCurrentWeather.setOnClickListener {
+            val intent = WeatherDetailActivity.getIntent(this, id)
+            startActivity(intent)
         }
     }
 }
