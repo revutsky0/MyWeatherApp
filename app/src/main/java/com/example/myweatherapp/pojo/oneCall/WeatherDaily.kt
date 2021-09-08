@@ -108,8 +108,8 @@ data class WeatherDaily(
 
     fun getDate() = getDateFromStamp(dt)
 
-    fun getDayOfWeek() = dt.toString()
-        //getDayOfWeekFromStamp(dt).replaceFirstChar { char -> char.uppercase() }
+    fun getDayOfWeek() =
+        getDayOfWeekFromStamp(dt).replaceFirstChar { char -> char.uppercase() }
 
     fun getDayAndDate() = getDayAndDateFromStamp(dt)
 

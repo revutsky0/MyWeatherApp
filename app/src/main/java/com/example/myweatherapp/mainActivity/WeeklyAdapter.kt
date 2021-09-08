@@ -30,7 +30,7 @@ class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.WeeklyWeatherViewHolder
         holder.tvDate.text = item.getDate()
         holder.tvDayNightTemp.text = item.getDayNightTemp()
         holder.tvDayOfWeek.text = item.getDayOfWeek()
-        holder.tvWingSpeed.text = item.windSpeed?.toString()
+        holder.tvWingSpeed.text = item.getWind()
     }
 
     override fun getItemCount(): Int {
