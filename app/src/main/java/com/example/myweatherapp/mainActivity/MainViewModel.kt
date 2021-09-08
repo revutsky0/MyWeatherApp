@@ -4,14 +4,15 @@ import android.app.Application
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import com.example.myweatherapp.api.ApiFactory
 import com.example.myweatherapp.database.WeatherDatabase
-import com.example.myweatherapp.getDayOfWeekNumber
+import com.example.myweatherapp.getDateWithNullTime
+import com.example.myweatherapp.pojo.oneCall.WeatherDaily
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -29,6 +30,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var disposableCity: Disposable? = null
     private var disposableData: Disposable? = null
     val currentWeather = database.dao().getCurrentWeather()
+    val currentDailyWeather = MutableLiveData<WeatherDaily>()
     val weeklyWeather = database.dao().getDailyWeather()
     private val preferences =
         application.getSharedPreferences("WeatherSettings", AppCompatActivity.MODE_PRIVATE)
@@ -48,7 +50,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
         }
         if (cityName != null && lat != null && lon != null) {
-            Log.d("MyApp", "viewModel initialize")
             getData(lat, lon)
         }
     }
@@ -64,14 +65,19 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             .repeat()
             .subscribeOn(Schedulers.io())
             .subscribe({
-                it.current?.let {
-                    database.dao().insertCurrentWeather(it)
-                }
+                database.dao().deleteCurrentWeather()
+                database.dao().deleteDailyWeather()
                 it.daily?.let {
                     it.map {
-                        it.id = getDayOfWeekNumber(it.dt)
+                        it.dt = getDateWithNullTime(it.dt)
                     }
                     database.dao().insertDailyWeather(it)
+                }
+                it.current?.let {
+                    it.dt = getDateWithNullTime(it.dt)
+                    database.dao().insertCurrentWeather(it)
+                    currentDailyWeather.postValue(database.dao().getDailyWeatherByDtObj(it.dt))
+
                 }
                 Log.d("MyApp", "Message = $it")
             }, {

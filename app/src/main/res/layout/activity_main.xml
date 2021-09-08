@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/MainConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/clouds"
@@ -46,6 +47,17 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="11°C" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvCurrentTemp" />
+
+
                 <TextView
                     android:id="@+id/tvWeatherStatus"
                     android:layout_width="wrap_content"
@@ -63,14 +75,14 @@
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="100dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="-15dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="-30dp"
+            android:layout_marginEnd="4dp"
             app:cardBackgroundColor="@color/main_weekly_weather_background"
             app:cardCornerRadius="15dp"
             app:cardElevation="0dp"
             app:cardPreventCornerOverlap="false"
-            app:contentPaddingTop="15dp"
+            app:contentPaddingTop="30dp"
             app:layout_constraintEnd_toEndOf="@+id/cvCurrentWeather"
             app:layout_constraintStart_toStartOf="@+id/cvCurrentWeather"
             app:layout_constraintTop_toBottomOf="@+id/cvCurrentWeather">
@@ -100,7 +112,6 @@
                     app:layout_constraintEnd_toStartOf="@+id/view3"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ivDayTempIcon"
-                    app:layout_constraintVertical_bias="0.3"
                     tools:text="12" />
 
                 <TextView
@@ -112,32 +123,31 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/view3"
-                    app:layout_constraintTop_toBottomOf="@+id/ivDayTempIcon2"
-                    app:layout_constraintVertical_bias="0.30"
+                    app:layout_constraintTop_toBottomOf="@+id/ivNightTempIcon"
                     tools:text="5
 " />
 
                 <ImageView
                     android:id="@+id/ivDayTempIcon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:contentDescription="@string/day_temp_icon_description_light"
                     app:layout_constraintEnd_toStartOf="@+id/view3"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:srcCompat="@drawable/day_light" />
 
                 <ImageView
-                    android:id="@+id/ivDayTempIcon2"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:id="@+id/ivNightTempIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:contentDescription="@string/night_temp_icon_description_light"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/view3"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:srcCompat="@drawable/night_light" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

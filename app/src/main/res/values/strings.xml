@@ -16,4 +16,7 @@
     <string name="wind_speed_units">м/с</string>
     <string name="day_temp_icon_description_light">Иконка погоды днем (светлая)</string>
     <string name="night_temp_icon_description_light">Иконка погоды ночью (светлая)</string>
+    <string name="day_temp_icon_description_dark">Иконка погоды днем (темная)</string>
+    <string name="night_temp_icon_description_dark">Иконка погоды ночью (темная)</string>
+
 </resources>

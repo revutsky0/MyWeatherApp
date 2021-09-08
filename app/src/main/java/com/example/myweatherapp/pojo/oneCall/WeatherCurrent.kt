@@ -3,23 +3,20 @@ package com.example.myweatherapp.pojo.oneCall
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.example.myweatherapp.DEGREE_STRING
 import com.example.myweatherapp.pojo.WeatherConverter
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlin.math.roundToInt
 
 @Entity(tableName = "weather_current")
 @TypeConverters(WeatherConverter::class)
 data class WeatherCurrent(
 
     @PrimaryKey
-    val id: Int = 1,
-
     @SerializedName("dt")
     @Expose
-    val dt: Long,
-//
-//    var dayTemp : Double,
-//    var nightTemp : Double,
+    var dt: Long,
 
     @SerializedName("sunrise")
     @Expose
@@ -78,12 +75,18 @@ data class WeatherCurrent(
     val weather: List<WeatherDetails>? = null
 ) {
 
-    fun getTemperature() = "${temp ?: 0}°C"
+    fun getTemperature() = "${temp?.roundToInt() ?: 0}$DEGREE_STRING"
 
     fun getWeatherStatus(): String {
         if (weather == null || weather.isEmpty()) return ""
         val weatherItem = weather[0]
         return weatherItem.description?.replaceFirstChar { char -> char.uppercase() } ?: ""
+    }
+
+    fun getWeatherBackground(): Int {
+        if (weather == null || weather.isEmpty()) return 0
+        val weatherItem = weather[0]
+        return weatherItem.getBackground()
     }
 
 }
