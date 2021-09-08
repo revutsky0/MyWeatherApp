@@ -5,9 +5,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
-
-
-data class FeelsLike (
+data class FeelsLike(
     @SerializedName("day")
     @Expose
     val day: Double? = null,

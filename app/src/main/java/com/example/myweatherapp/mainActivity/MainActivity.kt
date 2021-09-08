@@ -1,30 +1,27 @@
-package com.example.myweatherapp
+package com.example.myweatherapp.mainActivity
 
-import android.opengl.Visibility
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
-import io.reactivex.rxjava3.disposables.CompositeDisposable
+import com.example.myweatherapp.R
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
     private val etCity: TextView by lazy { findViewById(R.id.etCity) }
     private val ibFindCity: ImageButton by lazy { findViewById(R.id.ibFindCity) }
-    private val tvCurrentTemperature: TextView by lazy { findViewById(R.id.tvCurrentTemperature) }
+    private val tvCurrentTemp: TextView by lazy { findViewById(R.id.tvCurrentTemp) }
+    private val tvDayTemp: TextView by lazy { findViewById(R.id.tvDayTemp) }
+    private val tvNightTemp: TextView by lazy { findViewById(R.id.tvNightTemp) }
     private val tvWeatherStatus: TextView by lazy { findViewById(R.id.tvWeatherStatus) }
     private val rvWeeklyWeather: RecyclerView by lazy { findViewById(R.id.rvWeeklyWeather) }
     private val adapter: WeeklyAdapter by lazy { WeeklyAdapter() }
-    private val cardViewCurrentWeather : CardView by lazy { findViewById(R.id.cardViewCurrentWeather) }
+    private val cardViewCurrentWeather: CardView by lazy { findViewById(R.id.cvCurrentWeather) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,13 +30,11 @@ class MainActivity : AppCompatActivity() {
         etCity.text = viewModel.cityName ?: ""
         viewModel.currentWeather.observe(this,
             {
-                if (it != null) {
+                it?.let {
                     cardViewCurrentWeather.visibility = View.VISIBLE
-                    tvCurrentTemperature.text = it.getTemperature()
+                    tvCurrentTemp.text = it.getTemperature()
                     tvWeatherStatus.text = it.getWeatherStatus()
-                } else {
-                    cardViewCurrentWeather.visibility = View.INVISIBLE
-                    Toast.makeText(this, "Город не найден!", Toast.LENGTH_LONG).show()
+                    //tvDayTemp.text =
                 }
             }
         )

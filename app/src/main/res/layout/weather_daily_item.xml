@@ -7,7 +7,7 @@
     android:layout_margin="5dp"
     android:background="@color/main_current_temperature_background"
 
->
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,23 +20,23 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center"
-            android:text="Чт"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guidelineItem25"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Чт" />
 
         <TextView
             android:id="@+id/tvItemWindSpeed"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="5-10"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guidelineItem85"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="5-10" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -53,8 +53,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:gravity="center"
-                android:text="01.01.2000"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                tools:text="01.01.2000" />
 
             <TextView
                 android:id="@+id/tvItemDayNightTemp"
@@ -70,7 +70,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="м/с"
+            android:text="@string/wind_speed_units"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guidelineItem85"
@@ -100,7 +100,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guidelineItem85"
             app:layout_constraintStart_toStartOf="@id/guidelineItem25" />
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

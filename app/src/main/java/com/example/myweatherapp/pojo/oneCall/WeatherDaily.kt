@@ -1,16 +1,25 @@
 package com.example.myweatherapp.pojo.oneCall
 
-import android.util.Log
-import com.google.gson.annotations.Expose
-
-import com.google.gson.annotations.SerializedName
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.example.myweatherapp.getDateFromStamp
 import com.example.myweatherapp.getDayOfWeekFromStamp
+import com.example.myweatherapp.getDayAndDateFromStamp
+import com.example.myweatherapp.pojo.WeatherConverter
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "weather_daily")
+@TypeConverters(WeatherConverter::class)
 data class WeatherDaily(
+
+    @PrimaryKey
+    var id: Int = 0,
+
     @SerializedName("dt")
     @Expose
-    val dt: Long? = null,
+    val dt: Long,
 
     @SerializedName("sunrise")
     @Expose
@@ -70,30 +79,48 @@ data class WeatherDaily(
 
     @SerializedName("clouds")
     @Expose
-    val clouds: Int? = null
+    val clouds: Int? = null,
+
+    @SerializedName("pop")
+    @Expose
+    val pop: Double? = null
+
+
 ) {
+
     fun getDayNightTemp(): String {
         temp?.let {
-            return "${it.day ?: "0"}°C / ${temp.night ?: '0'}°C"
+            return "${it.day ?: "0"}° / ${temp.night ?: '0'}°"
         }
         return ""
     }
+
+    fun getDayTemp() = "${temp?.day ?: "0"}°"
+
+    fun getNightTemp() = "${temp?.night ?: "0"}°"
 
     fun getWeatherDescription(): String {
         if (weather == null || weather.isEmpty()) {
             return "none"
         }
         val item = weather[0]
-        return item.description ?: "none"
+        return item.description?.replaceFirstChar { char -> char.uppercase() } ?: ""
     }
 
     fun getDate() = getDateFromStamp(dt)
 
-    fun getWindSpeed() : String {
-        windSpeed?.let { return "$it" }
-        return ""
-    }
+    fun getDayOfWeek() =
+        getDayOfWeekFromStamp(dt).replaceFirstChar { char -> char.uppercase() }
 
-    fun getDayOfWeek() = getDayOfWeekFromStamp(dt).capitalize()
+    fun getDayAndDate() = getDayAndDateFromStamp(dt)
 
+    fun getCloudsValue() = "${clouds ?: 0} %"
+
+    fun getPressures() = "${pressure ?: 0} mbar"
+
+    fun getWind() = "${windSpeed ?: 0} m/s"
+
+    fun getPrecipitation() = "${(pop ?: 0 * 100).toInt()}%"
+
+    fun getHumidityValue() = "${humidity ?: 0} %"
 }
