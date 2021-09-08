@@ -3,10 +3,10 @@ package com.example.myweatherapp.pojo.oneCall
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.example.myweatherapp.DEGREE_STRING
 import com.example.myweatherapp.getDateFromStamp
-import com.example.myweatherapp.getDayOfWeekFromStamp
 import com.example.myweatherapp.getDayAndDateFromStamp
-import com.example.myweatherapp.DERGEE_STRING
+import com.example.myweatherapp.getDayOfWeekFromStamp
 import com.example.myweatherapp.pojo.WeatherConverter
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -89,14 +89,14 @@ data class WeatherDaily(
 
     fun getDayNightTemp(): String {
         temp?.let {
-            return "${it.day?.roundToInt() ?: "0"}° / ${temp.night?.roundToInt() ?: '0'}$DERGEE_STRING"
+            return "${it.day?.roundToInt() ?: "0"}° / ${temp.night?.roundToInt() ?: '0'}$DEGREE_STRING"
         }
         return ""
     }
 
-    fun getDayTemp() = "${temp?.day?.roundToInt() ?: "0"}$DERGEE_STRING"
+    fun getDayTemp() = "${temp?.day?.roundToInt() ?: "0"}$DEGREE_STRING"
 
-    fun getNightTemp() = "${temp?.night?.roundToInt() ?: "0"}$DERGEE_STRING"
+    fun getNightTemp() = "${temp?.night?.roundToInt() ?: "0"}$DEGREE_STRING"
 
     fun getWeatherDescription(): String {
         if (weather == null || weather.isEmpty()) {

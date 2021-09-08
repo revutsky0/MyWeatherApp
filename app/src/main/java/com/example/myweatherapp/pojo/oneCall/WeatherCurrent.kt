@@ -3,7 +3,7 @@ package com.example.myweatherapp.pojo.oneCall
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.example.myweatherapp.DERGEE_STRING
+import com.example.myweatherapp.DEGREE_STRING
 import com.example.myweatherapp.pojo.WeatherConverter
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -75,7 +75,7 @@ data class WeatherCurrent(
     val weather: List<WeatherDetails>? = null
 ) {
 
-    fun getTemperature() = "${temp?.roundToInt() ?: 0}$DERGEE_STRING"
+    fun getTemperature() = "${temp?.roundToInt() ?: 0}$DEGREE_STRING"
 
     fun getWeatherStatus(): String {
         if (weather == null || weather.isEmpty()) return ""

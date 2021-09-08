@@ -1,6 +1,5 @@
 package com.example.myweatherapp.mainActivity
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton

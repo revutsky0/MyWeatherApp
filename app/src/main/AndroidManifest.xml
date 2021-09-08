@@ -12,9 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyWeatherApp">
         <activity android:name=".detailActivity.WeatherDetailActivity"/>
-        <activity android:name=".mainActivity.MainActivity">
+        <activity android:name=".mainActivity.MainActivity"
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

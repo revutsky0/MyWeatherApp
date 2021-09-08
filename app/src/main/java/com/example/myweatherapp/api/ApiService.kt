@@ -2,10 +2,8 @@ package com.example.myweatherapp.api
 
 import com.example.myweatherapp.pojo.DataCity
 import com.example.myweatherapp.pojo.oneCall.DataOneCall
-import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -16,10 +14,10 @@ interface ApiService {
         const val API_KEY = "ba87b3a9b23c4aa69485d96061abe59b"
 
         // ENDPOINTS
-        const val URL_DATA = "data/2.5/"
+        private const val URL_DATA = "data/2.5/"
         const val ENDPOINT_ONE_CALL = URL_DATA + "onecall"
         const val ENDPOINT_CURRENT = URL_DATA + "weather"
-        const val ENDPOINT_COORDINATES =  "geo/1.0/direct"
+        const val ENDPOINT_COORDINATES = "geo/1.0/direct"
 
         // PARAMS NAME
         const val PARAM_NAME_API_KEY = "appid"
@@ -48,18 +46,18 @@ interface ApiService {
 
     @GET(ENDPOINT_COORDINATES)
     fun getDataOfCity(
-        @Query(PARAM_NAME_CITY) cityName : String,
-        @Query(PARAM_NAME_API_KEY) apiKey : String = API_KEY,
-    ) : Single<List<DataCity>>
+        @Query(PARAM_NAME_CITY) cityName: String,
+        @Query(PARAM_NAME_API_KEY) apiKey: String = API_KEY,
+    ): Single<List<DataCity>>
 
     @GET(ENDPOINT_ONE_CALL)
     fun getWeather(
-        @Query(PARAM_NAME_LATITUDE) lat : Double,
-        @Query(PARAM_NAME_LONGITUDE) lon : Double,
-        @Query(PARAM_NAME_EXCLUDE) exclude : String = "$PARAM_EXCLUDE_ALERTS,$PARAM_EXCLUDE_MINUTELY,$PARAM_EXCLUDE_HOURLY",
-        @Query(PARAM_NAME_LANGUAGE) lang : String = PARAM_LANGUAGE_RUSSIAN,
-        @Query(PARAM_NAME_UNITS) units : String = PARAM_UNITS_METRIC,
-        @Query(PARAM_NAME_API_KEY) apiKey : String = API_KEY
-    ) : Observable<DataOneCall>
+        @Query(PARAM_NAME_LATITUDE) lat: Double,
+        @Query(PARAM_NAME_LONGITUDE) lon: Double,
+        @Query(PARAM_NAME_EXCLUDE) exclude: String = "$PARAM_EXCLUDE_ALERTS,$PARAM_EXCLUDE_MINUTELY,$PARAM_EXCLUDE_HOURLY",
+        @Query(PARAM_NAME_LANGUAGE) lang: String = PARAM_LANGUAGE_RUSSIAN,
+        @Query(PARAM_NAME_UNITS) units: String = PARAM_UNITS_METRIC,
+        @Query(PARAM_NAME_API_KEY) apiKey: String = API_KEY
+    ): Observable<DataOneCall>
 
 }
