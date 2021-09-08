@@ -106,6 +106,22 @@ data class WeatherDaily(
         return item.description?.replaceFirstChar { char -> char.uppercase() } ?: ""
     }
 
+    fun getWeatherIcon(): Int {
+        if (weather == null || weather.isEmpty()) {
+            return 0
+        }
+        val item = weather[0]
+        return item.getIcon()
+    }
+
+    fun getWeatherBackground(): Int {
+        if (weather == null || weather.isEmpty()) {
+            return 0
+        }
+        val item = weather[0]
+        return item.getBackground()
+    }
+
     fun getDate() = getDateFromStamp(dt)
 
     fun getDayOfWeek() =

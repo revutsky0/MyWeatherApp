@@ -11,7 +11,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="50dp"
         android:background="@color/main_weekly_weather_background"
         android:padding="5dp">
 
@@ -27,18 +27,8 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Чт" />
 
-        <TextView
-            android:id="@+id/tvItemWindSpeed"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guidelineItem85"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="5-10" />
-
         <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="horizontal"
@@ -51,7 +41,7 @@
                 android:id="@+id/tvItemDate"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:textColor="@color/white"
                 tools:text="01.01.2000" />
@@ -63,18 +53,30 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:textColor="@color/white" />
-        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvItemWindUnits"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/wind_speed_units"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guidelineItem85"
-            app:layout_constraintTop_toBottomOf="@+id/tvItemWindSpeed" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvItemWindSpeed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    tools:text="5-10" />
+
+                <TextView
+                    android:id="@+id/tvItemWindUnits"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/wind_speed_units"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineItem25"
@@ -100,6 +102,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guidelineItem85"
             app:layout_constraintStart_toStartOf="@id/guidelineItem25" />
+
+        <ImageView
+            android:id="@+id/ivWeatherIcon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/cloud" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

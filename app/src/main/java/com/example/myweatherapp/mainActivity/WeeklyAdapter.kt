@@ -1,9 +1,10 @@
 package com.example.myweatherapp.mainActivity
 
-import android.util.Log
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myweatherapp.R
@@ -24,6 +25,7 @@ class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.WeeklyWeatherViewHolder
         return WeeklyWeatherViewHolder(view)
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onBindViewHolder(holder: WeeklyWeatherViewHolder, position: Int) {
         val item = weeklyWeather[position]
         holder.id = item.dt
@@ -31,6 +33,8 @@ class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.WeeklyWeatherViewHolder
         holder.tvDayNightTemp.text = item.getDayNightTemp()
         holder.tvDayOfWeek.text = item.getDayOfWeek()
         holder.tvWingSpeed.text = item.getWind()
+        holder.ivWeatherIcon.setImageDrawable(holder.itemView.resources.getDrawable(item.getWeatherIcon()))
+        holder.ivWeatherIcon.contentDescription = item.getWeatherDescription()
     }
 
     override fun getItemCount(): Int {
@@ -38,15 +42,16 @@ class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.WeeklyWeatherViewHolder
     }
 
     class WeeklyWeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var id : Long = 0
+        var id: Long = 0
         val tvDayNightTemp: TextView by lazy { itemView.findViewById(R.id.tvItemDayNightTemp) }
         val tvDate: TextView by lazy { itemView.findViewById(R.id.tvItemDate) }
         val tvDayOfWeek: TextView by lazy { itemView.findViewById(R.id.tvItemDayOfWeek) }
         val tvWingSpeed: TextView by lazy { itemView.findViewById(R.id.tvItemWindSpeed) }
+        val ivWeatherIcon: ImageView by lazy { itemView.findViewById(R.id.ivWeatherIcon) }
+
         init {
-            itemView.setOnClickListener{
-                Log.d("MyApp","id = $id")
-                val intent = WeatherDetailActivity.getIntent(itemView.context,id)
+            itemView.setOnClickListener {
+                val intent = WeatherDetailActivity.getIntent(itemView.context, id)
                 itemView.context.startActivity(intent)
             }
         }

@@ -1,5 +1,6 @@
 package com.example.myweatherapp.mainActivity
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
@@ -25,11 +26,14 @@ class MainActivity : AppCompatActivity() {
     private val adapter: WeeklyAdapter by lazy { WeeklyAdapter() }
     private val cardViewCurrentWeather: CardView by lazy { findViewById(R.id.cvCurrentWeather) }
     private val clCurrentWeather: ConstraintLayout by lazy { findViewById(R.id.clCurrentWeather) }
+    private val MainConstraintLayout: ConstraintLayout by lazy { findViewById(R.id.MainConstraintLayout) }
+    private var currentBackground = R.drawable.clouds_bg
     private var id = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         etCity.text = viewModel.cityName ?: ""
         viewModel.currentWeather.observe(this,
@@ -39,6 +43,11 @@ class MainActivity : AppCompatActivity() {
                     cardViewCurrentWeather.visibility = View.VISIBLE
                     tvCurrentTemp.text = it.getTemperature()
                     tvWeatherStatus.text = it.getWeatherStatus()
+                    val background = it.getWeatherBackground()
+                    if (currentBackground != background) {
+                        MainConstraintLayout.background = resources.getDrawable(background)
+                        currentBackground = background
+                    }
                 }
             }
         )

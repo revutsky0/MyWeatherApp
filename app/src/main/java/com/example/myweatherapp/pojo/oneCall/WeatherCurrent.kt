@@ -83,4 +83,10 @@ data class WeatherCurrent(
         return weatherItem.description?.replaceFirstChar { char -> char.uppercase() } ?: ""
     }
 
+    fun getWeatherBackground(): Int {
+        if (weather == null || weather.isEmpty()) return 0
+        val weatherItem = weather[0]
+        return weatherItem.getBackground()
+    }
+
 }
