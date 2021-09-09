@@ -5,14 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:background="@color/main_current_temperature_background"
+    android:background="#00000000"
 
-    >
+    app:cardBackgroundColor="#00000000"
+    app:cardElevation="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/main_weekly_weather_background"
+        android:background="#00000000"
         android:padding="5dp">
 
         <TextView
