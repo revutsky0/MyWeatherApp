@@ -44,6 +44,10 @@ interface WeatherDao {
     @Query("DELETE FROM weather_daily")
     fun deleteDailyWeather()
 
+
+    @Query("SELECT COUNT(*) FROM weather_daily")
+    fun getWeatherDailyCount() : Int
+
     //endregion
 
 

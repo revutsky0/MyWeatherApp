@@ -65,8 +65,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             .repeat()
             .subscribeOn(Schedulers.io())
             .subscribe({
-                database.dao().deleteCurrentWeather()
-                database.dao().deleteDailyWeather()
+                val count = database.dao().getWeatherDailyCount()
+                if (count>7) {
+                    database.dao().deleteCurrentWeather()
+                    database.dao().deleteDailyWeather()
+                }
                 it.daily?.let {
                     it.map {
                         it.dt = getDateWithNullTime(it.dt)
