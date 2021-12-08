@@ -7,6 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import com.example.myweatherapp.data.repository.WeatherRepositoryImpl
 import com.example.myweatherapp.domain.models.DailyWeather
 import com.example.myweatherapp.domain.usecase.GetDailyWeatherUseCase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class WeatherDetailViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -16,8 +19,10 @@ class WeatherDetailViewModel(application: Application) : AndroidViewModel(applic
     val weather: LiveData<DailyWeather> = _weather
 
     fun getWeather(dt: Long) {
-        val current = getDailyWeather(dt)
-        _weather.postValue(current)
+        CoroutineScope(Dispatchers.IO).launch {
+            val current = getDailyWeather(dt)
+            _weather.postValue(current)
+        }
     }
 
 }

@@ -15,5 +15,5 @@ data class CurrentWeatherDbModel(
     val clouds: Int? = null,
     val windSpeed: Float? = null,
     val windDeg: Int? = null,
-    val weather: List<WeatherDetailsDbModel>? = null
+    val weather: WeatherDetailsDbModel? = null
 )

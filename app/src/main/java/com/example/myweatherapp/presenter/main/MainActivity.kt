@@ -3,6 +3,7 @@ package com.example.myweatherapp.presenter.main
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.myweatherapp.R
 import com.example.myweatherapp.databinding.ActivityMainBinding
@@ -20,16 +21,37 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        binding.etCity.setText(viewModel.cityName ?: "")
+        setOnClickListeners()
+        setObservable()
+        viewModel.loadCurrentData()
+    }
+
+    private fun setOnClickListeners() {
+        with(binding) {
+            rvWeeklyWeather.adapter = adapter
+            ibFindCity.setOnClickListener {
+                //viewModel.loadData(etCity.text.toString())
+            }
+            clCurrentWeather.setOnClickListener {
+                val intent = WeatherDetailActivity.getIntent(this@MainActivity, id)
+                startActivity(intent)
+            }
+        }
+    }
+
+    private fun setObservable() {
+        viewModel.weeklyWeather.observe(this@MainActivity, {
+            adapter.weeklyWeather = it
+        })
         viewModel.currentWeather.observe(this,
             {
                 it?.let {
-                    id = it.dt
+                    id = it.id
                     with(binding) {
                         cvCurrentWeather.visibility = View.VISIBLE
-                        tvCurrentTemp.text = it.getTemperature()
-                        tvWeatherStatus.text = it.getWeatherStatus()
-                        val background = it.getWeatherBackground()
+                        tvCurrentTemp.text = it.currentTemp
+                        tvWeatherStatus.text = it.status
+                        val background = it.background
                         if (currentBackground != background) {
                             MainConstraintLayout.background = resources.getDrawable(background)
                             currentBackground = background
@@ -38,25 +60,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         )
-        with(binding) {
-            rvWeeklyWeather.adapter = adapter
-            rvWeeklyWeather.layoutManager
-            viewModel.weeklyWeather.observe(this@MainActivity, {
-                adapter.weeklyWeather = it
-            })
-            ibFindCity.setOnClickListener {
-                viewModel.loadData(etCity.text.toString())
+        viewModel.currentDailyWeather.observe(this@MainActivity, {
+            it?.let {
+                binding.tvDayTemp.text = it.dayTemp
+                binding.tvNightTemp.text = it.nightTemp
             }
-            viewModel.currentDailyWeather.observe(this@MainActivity, {
-                it?.let {
-                    tvDayTemp.text = it.getDayTemp()
-                    tvNightTemp.text = it.getNightTemp()
-                }
-            })
-            clCurrentWeather.setOnClickListener {
-                val intent = WeatherDetailActivity.getIntent(this@MainActivity, id)
-                startActivity(intent)
-            }
-        }
+        })
     }
 }

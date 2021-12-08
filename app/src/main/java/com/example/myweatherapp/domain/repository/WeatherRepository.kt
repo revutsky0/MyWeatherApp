@@ -5,7 +5,7 @@ import com.example.myweatherapp.domain.models.DailyWeather
 import com.example.myweatherapp.domain.models.DailyWeatherListItem
 
 interface WeatherRepository {
-    fun getCurrentWeather(): CurrentWeather
-    fun getDailyWeatherList(): List<DailyWeatherListItem>
-    fun getDailyWeather(dt: Long): DailyWeather
+    suspend fun getCurrentWeather(): CurrentWeather
+    suspend fun getDailyWeatherList(): List<DailyWeatherListItem>
+    suspend fun getDailyWeather(dt: Long): DailyWeather
 }

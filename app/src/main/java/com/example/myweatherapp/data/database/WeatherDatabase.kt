@@ -4,14 +4,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.myweatherapp.data.network.pojo.oneCall.WeatherCurrentPojo
-import com.example.myweatherapp.data.network.pojo.oneCall.WeatherDailyPojo
+import androidx.room.TypeConverters
+import com.example.myweatherapp.data.database.dbmodels.CurrentWeatherDbModel
+import com.example.myweatherapp.data.database.dbmodels.DailyWeatherDbModel
+import com.example.myweatherapp.data.database.converters.WeatherConverter
 
 @Database(
-    entities = [WeatherDailyPojo::class, WeatherCurrentPojo::class],
+    entities = [DailyWeatherDbModel::class, CurrentWeatherDbModel::class],
     version = 1,
     exportSchema = false
 )
+@TypeConverters(WeatherConverter::class)
 abstract class WeatherDatabase : RoomDatabase() {
 
     companion object {

@@ -2,8 +2,33 @@ package com.example.myweatherapp.data.mappers
 
 import android.util.Log
 import com.example.myweatherapp.R
+import com.example.myweatherapp.data.database.dbmodels.CurrentWeatherDbModel
+import com.example.myweatherapp.data.database.dbmodels.DailyWeatherDbModel
+import com.example.myweatherapp.domain.models.CurrentWeather
+import com.example.myweatherapp.domain.models.DailyWeather
+import com.example.myweatherapp.domain.models.DailyWeatherListItem
 
 class WeatherMapper {
+
+    fun currentFromDbToDomain(current: CurrentWeatherDbModel): CurrentWeather {
+
+        return CurrentWeather(
+            id = 1,
+            currentTemp = "",
+            status = "",
+            dayTemp = "",
+            nightTemp = "",
+            background = 1
+        )
+    }
+
+    fun dailyFromDbToDomain(daily: DailyWeatherDbModel): DailyWeather {
+        TODO()
+    }
+
+    fun dailyFromDbToDomainListItem(daily: DailyWeatherDbModel): DailyWeatherListItem {
+        TODO()
+    }
 
     fun getIcon(id: Int) = when (id) {
         800 -> R.drawable.sunny

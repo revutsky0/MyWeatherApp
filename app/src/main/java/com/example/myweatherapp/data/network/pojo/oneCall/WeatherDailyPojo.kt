@@ -2,7 +2,7 @@ package com.example.myweatherapp.data.network.pojo.oneCall
 
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.example.myweatherapp.data.network.pojo.WeatherConverter
+import com.example.myweatherapp.data.database.converters.WeatherConverter
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 

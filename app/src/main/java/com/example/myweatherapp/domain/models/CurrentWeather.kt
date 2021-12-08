@@ -5,10 +5,10 @@ import kotlin.math.roundToInt
 
 data class CurrentWeather(
     val id: Long,
-    val currentTemp: Int,
+    val currentTemp: String,
     val status: String,
-    val dayTemp: Int,
-    val nightTemp: Int,
+    val dayTemp: String,
+    val nightTemp: String,
     val background: Int
 ) {
 //    fun getTemperature() = "${temp?.roundToInt() ?: 0}$DEGREE_STRING"
