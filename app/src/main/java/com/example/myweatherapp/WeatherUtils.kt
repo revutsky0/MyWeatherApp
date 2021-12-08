@@ -6,7 +6,6 @@ import java.util.*
 private val calendar = Calendar.getInstance()
 const val DEGREE_STRING = "°"
 
-
 fun getDateFromStamp(stamp: Long?) = getFromStamp(stamp, "dd MMMM")
 
 fun getDayOfWeekFromStamp(stamp: Long?) = getFromStamp(stamp, "E")

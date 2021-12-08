@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#272643"
-    tools:context=".detailActivity.WeatherDetailActivity">
+    tools:context=".presenter.detail.WeatherDetailActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"

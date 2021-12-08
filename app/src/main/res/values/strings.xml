@@ -18,5 +18,6 @@
     <string name="night_temp_icon_description_light">Иконка погоды ночью (светлая)</string>
     <string name="day_temp_icon_description_dark">Иконка погоды днем (темная)</string>
     <string name="night_temp_icon_description_dark">Иконка погоды ночью (темная)</string>
+    <string name="pressure_units">мм рт. ст.</string>
 
 </resources>
