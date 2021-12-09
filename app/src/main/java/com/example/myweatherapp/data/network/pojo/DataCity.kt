@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose
 
 import com.google.gson.annotations.SerializedName
 
-
 data class DataCity(
     @SerializedName("name")
     @Expose
@@ -12,11 +11,11 @@ data class DataCity(
 
     @SerializedName("lat")
     @Expose
-    val lat: Double? = null,
+    val lat: Float? = null,
 
     @SerializedName("lon")
     @Expose
-    val lon: Double? = null,
+    val lon: Float? = null,
 
     @SerializedName("country")
     @Expose

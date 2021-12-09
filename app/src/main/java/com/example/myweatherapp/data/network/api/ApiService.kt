@@ -48,16 +48,16 @@ interface ApiService {
     fun getDataOfCity(
         @Query(PARAM_NAME_CITY) cityName: String,
         @Query(PARAM_NAME_API_KEY) apiKey: String = API_KEY,
-    ): Single<List<DataCity>>
+    ): List<DataCity>
 
     @GET(ENDPOINT_ONE_CALL)
     fun getWeather(
-        @Query(PARAM_NAME_LATITUDE) lat: Double,
-        @Query(PARAM_NAME_LONGITUDE) lon: Double,
+        @Query(PARAM_NAME_LATITUDE) lat: Float,
+        @Query(PARAM_NAME_LONGITUDE) lon: Float,
         @Query(PARAM_NAME_EXCLUDE) exclude: String = "$PARAM_EXCLUDE_ALERTS,$PARAM_EXCLUDE_MINUTELY,$PARAM_EXCLUDE_HOURLY",
         @Query(PARAM_NAME_LANGUAGE) lang: String = PARAM_LANGUAGE_RUSSIAN,
         @Query(PARAM_NAME_UNITS) units: String = PARAM_UNITS_METRIC,
         @Query(PARAM_NAME_API_KEY) apiKey: String = API_KEY
-    ): Observable<DataOneCall>
+    ): DataOneCall
 
 }

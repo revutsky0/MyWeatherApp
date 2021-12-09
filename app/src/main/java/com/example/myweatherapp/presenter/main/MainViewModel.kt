@@ -1,37 +1,27 @@
 package com.example.myweatherapp.presenter.main
 
 import android.app.Application
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.myweatherapp.data.network.api.ApiFactory
-import com.example.myweatherapp.data.database.WeatherDatabase
-import com.example.myweatherapp.getDateWithNullTime
-import com.example.myweatherapp.data.network.pojo.oneCall.WeatherDailyPojo
 import com.example.myweatherapp.data.repository.CityRepositoryImpl
 import com.example.myweatherapp.data.repository.WeatherRepositoryImpl
 import com.example.myweatherapp.domain.models.CurrentWeather
 import com.example.myweatherapp.domain.models.DailyWeather
 import com.example.myweatherapp.domain.models.DailyWeatherListItem
-import com.example.myweatherapp.domain.usecase.GetCurrentWeatherUseCase
-import com.example.myweatherapp.domain.usecase.GetDailyWeatherListUseCase
-import com.example.myweatherapp.domain.usecase.GetDailyWeatherUseCase
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import com.example.myweatherapp.domain.usecase.weather.GetCurrentWeatherUseCase
+import com.example.myweatherapp.domain.usecase.weather.GetDailyWeatherListUseCase
+import com.example.myweatherapp.domain.usecase.weather.GetDailyWeatherUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val weatherRepository = WeatherRepositoryImpl(application)
-    private val cityRepository = CityRepositoryImpl()
+    private val cityRepository = CityRepositoryImpl(application)
 
     private val getCurrentWeather = GetCurrentWeatherUseCase(weatherRepository)
     private val getDailyWeather = GetDailyWeatherUseCase(weatherRepository)
@@ -57,7 +47,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun loadWeeklyData() {
         scope.launch {
-            _weeklyWeather.postValue(getDailyWeatherList())
+            _weeklyWeather.postValue(getDailyWeatherList()!!)
         }
     }
 
@@ -65,7 +55,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         scope.launch {
             val current = getCurrentWeather()
             _currentWeather.postValue(current)
-            _currentDailyWeather.postValue(getDailyWeather(current.id))
+            _currentDailyWeather.postValue(getDailyWeather(current.id)!!)
         }
     }
 

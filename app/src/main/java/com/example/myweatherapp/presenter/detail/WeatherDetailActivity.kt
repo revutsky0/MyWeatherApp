@@ -1,5 +1,6 @@
 package com.example.myweatherapp.presenter.detail
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -26,6 +27,7 @@ class WeatherDetailActivity : AppCompatActivity() {
     private val pressureUnits by lazy { this.getString(R.string.wind_speed_units) }
     private val windUnits by lazy { this.getString(R.string.pressure_units) }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)

@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.myweatherapp.data.repository.WeatherRepositoryImpl
 import com.example.myweatherapp.domain.models.DailyWeather
-import com.example.myweatherapp.domain.usecase.GetDailyWeatherUseCase
+import com.example.myweatherapp.domain.usecase.weather.GetDailyWeatherUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

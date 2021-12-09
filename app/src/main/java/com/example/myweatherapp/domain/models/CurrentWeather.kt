@@ -1,8 +1,5 @@
 package com.example.myweatherapp.domain.models
 
-import com.example.myweatherapp.DEGREE_STRING
-import kotlin.math.roundToInt
-
 data class CurrentWeather(
     val id: Long,
     val currentTemp: String,

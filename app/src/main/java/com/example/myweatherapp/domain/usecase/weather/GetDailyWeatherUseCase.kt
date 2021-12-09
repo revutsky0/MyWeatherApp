@@ -1,4 +1,4 @@
-package com.example.myweatherapp.domain.usecase
+package com.example.myweatherapp.domain.usecase.weather
 
 import com.example.myweatherapp.domain.repository.WeatherRepository
 
