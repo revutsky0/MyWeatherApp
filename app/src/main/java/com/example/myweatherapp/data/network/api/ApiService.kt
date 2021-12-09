@@ -2,8 +2,6 @@ package com.example.myweatherapp.data.network.api
 
 import com.example.myweatherapp.data.network.pojo.DataCity
 import com.example.myweatherapp.data.network.pojo.oneCall.DataOneCall
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -45,13 +43,13 @@ interface ApiService {
     }
 
     @GET(ENDPOINT_COORDINATES)
-    fun getDataOfCity(
+    suspend fun getDataOfCity(
         @Query(PARAM_NAME_CITY) cityName: String,
         @Query(PARAM_NAME_API_KEY) apiKey: String = API_KEY,
     ): List<DataCity>
 
     @GET(ENDPOINT_ONE_CALL)
-    fun getWeather(
+    suspend fun getWeather(
         @Query(PARAM_NAME_LATITUDE) lat: Float,
         @Query(PARAM_NAME_LONGITUDE) lon: Float,
         @Query(PARAM_NAME_EXCLUDE) exclude: String = "$PARAM_EXCLUDE_ALERTS,$PARAM_EXCLUDE_MINUTELY,$PARAM_EXCLUDE_HOURLY",

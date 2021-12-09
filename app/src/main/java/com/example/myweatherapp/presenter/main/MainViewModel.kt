@@ -7,9 +7,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.myweatherapp.data.repository.CityRepositoryImpl
 import com.example.myweatherapp.data.repository.WeatherRepositoryImpl
+import com.example.myweatherapp.domain.models.City
 import com.example.myweatherapp.domain.models.CurrentWeather
 import com.example.myweatherapp.domain.models.DailyWeather
 import com.example.myweatherapp.domain.models.DailyWeatherListItem
+import com.example.myweatherapp.domain.usecase.city.GetCityListUseCase
+import com.example.myweatherapp.domain.usecase.city.GetCityWeatherUseCase
+import com.example.myweatherapp.domain.usecase.city.GetLastCityUseCase
 import com.example.myweatherapp.domain.usecase.weather.GetCurrentWeatherUseCase
 import com.example.myweatherapp.domain.usecase.weather.GetDailyWeatherListUseCase
 import com.example.myweatherapp.domain.usecase.weather.GetDailyWeatherUseCase
@@ -26,6 +30,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val getCurrentWeather = GetCurrentWeatherUseCase(weatherRepository)
     private val getDailyWeather = GetDailyWeatherUseCase(weatherRepository)
     private val getDailyWeatherList = GetDailyWeatherListUseCase(weatherRepository)
+    private val getLastCity = GetLastCityUseCase(cityRepository)
+    private val getCityWeather = GetCityWeatherUseCase(weatherRepository)
+    private val getCityList = GetCityListUseCase(cityRepository)
 
     private val _currentWeather = MutableLiveData<CurrentWeather>()
     val currentWeather: LiveData<CurrentWeather> = _currentWeather
@@ -36,27 +43,32 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val _weeklyWeather = MutableLiveData<List<DailyWeatherListItem>>()
     val weeklyWeather: LiveData<List<DailyWeatherListItem>> = _weeklyWeather
 
-    private val preferences =
-        application.getSharedPreferences("WeatherSettings", AppCompatActivity.MODE_PRIVATE)
-
     private val scope = CoroutineScope(Dispatchers.IO)
+    private var city: City? = null
 
     init {
-        loadWeeklyData()
-    }
-
-    private fun loadWeeklyData() {
         scope.launch {
-            _weeklyWeather.postValue(getDailyWeatherList()!!)
+            loadData(city = getLastCity())
         }
     }
 
-    fun loadCurrentData() {
+    fun findCity(name: String) {
         scope.launch {
-            val current = getCurrentWeather()
-            _currentWeather.postValue(current)
-            _currentDailyWeather.postValue(getDailyWeather(current.id)!!)
+            val cityList = getCityList(name)
+            loadData(cityList[0])
         }
+    }
+
+    private suspend fun loadData(city: City?) {
+        if (city == null) return
+        this.city = city
+        getCityWeather(city)
+        val current = getCurrentWeather()
+        val daily = getDailyWeather(current.id)
+        val dailyList = getDailyWeatherList()
+        _currentWeather.postValue(current)
+        _currentDailyWeather.postValue(daily)
+        _weeklyWeather.postValue(dailyList)
     }
 
     override fun onCleared() {

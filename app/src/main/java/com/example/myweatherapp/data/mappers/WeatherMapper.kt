@@ -7,30 +7,48 @@ import com.example.myweatherapp.data.database.dbmodels.DailyWeatherDbModel
 import com.example.myweatherapp.domain.models.CurrentWeather
 import com.example.myweatherapp.domain.models.DailyWeather
 import com.example.myweatherapp.domain.models.DailyWeatherListItem
+import kotlin.math.roundToInt
 
 class WeatherMapper {
 
-    fun currentFromDbToDomain(current: CurrentWeatherDbModel): CurrentWeather {
+    fun currentFromDbToDomain(current: CurrentWeatherDbModel) = CurrentWeather(
+        id = current.dt,
+        currentTemp = "${current.temp?.roundToInt()}",
+        status = current.weather?.description ?: "",
+        background = if (current.weather != null) {
+            getBackground(current.weather.id)
+        } else 0
+    )
 
-        return CurrentWeather(
-            id = 1,
-            currentTemp = "",
-            status = "",
-            dayTemp = "",
-            nightTemp = "",
-            background = 1
-        )
-    }
+    fun dailyFromDbToDomain(daily: DailyWeatherDbModel) = DailyWeather(
+        id = daily.dt,
+        dayOfWeek = "",
+        date = "",
+        dayTemp = "${daily.temp?.day}",
+        nightTemp = "${daily.temp?.night}",
+        status = "${daily.weather?.description}",
+        clouds = daily.clouds ?: 0,
+        humidity = daily.humidity ?: 0,
+        precipitation = 0,
+        pressure = daily.pressure ?: 0,
+        wind = daily.windSpeed?.roundToInt() ?: 0
+    )
 
-    fun dailyFromDbToDomain(daily: DailyWeatherDbModel): DailyWeather {
-        TODO()
-    }
+    fun dailyFromDbToDomainListItem(daily: DailyWeatherDbModel) = DailyWeatherListItem(
+        id = daily.dt,
+        dayOfWeek = "",
+        date = "",
+        dayTemp = "${daily.temp?.day}",
+        nightTemp = "${daily.temp?.night}",
+        status = "${daily.weather?.description}",
+        windSpeed = daily.windSpeed ?: 0f,
+        windUnits = "м/с",
+        icon = if (daily.weather != null) {
+            getIcon(daily.weather.id)
+        } else getIcon(0)
+    )
 
-    fun dailyFromDbToDomainListItem(daily: DailyWeatherDbModel): DailyWeatherListItem {
-        TODO()
-    }
-
-    fun getIcon(id: Int) = when (id) {
+    private fun getIcon(id: Int) = when (id) {
         800 -> R.drawable.sunny
         in 801..804 -> R.drawable.cloud
         in 600..699 -> R.drawable.show
@@ -39,7 +57,7 @@ class WeatherMapper {
         else -> R.drawable.sunny
     }
 
-    fun getBackground(id: Int): Int {
+    private fun getBackground(id: Int): Int {
         Log.d("MyApp", "bg id =  $id")
         return when (id) {
             800 -> R.drawable.sunny_bg

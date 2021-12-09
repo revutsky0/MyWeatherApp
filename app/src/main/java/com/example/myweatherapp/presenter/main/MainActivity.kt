@@ -23,14 +23,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setOnClickListeners()
         setObservable()
-        viewModel.loadCurrentData()
     }
 
     private fun setOnClickListeners() {
         with(binding) {
             rvWeeklyWeather.adapter = adapter
             ibFindCity.setOnClickListener {
-                //viewModel.loadData(etCity.text.toString())
+                viewModel.findCity(etCity.text.toString())
             }
             clCurrentWeather.setOnClickListener {
                 val intent = WeatherDetailActivity.getIntent(this@MainActivity, id)

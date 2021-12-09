@@ -4,8 +4,8 @@ data class CurrentWeather(
     val id: Long,
     val currentTemp: String,
     val status: String,
-    val dayTemp: String,
-    val nightTemp: String,
+//    val dayTemp: String,
+//    val nightTemp: String,
     val background: Int
 ) {
 //    fun getTemperature() = "${temp?.roundToInt() ?: 0}$DEGREE_STRING"
