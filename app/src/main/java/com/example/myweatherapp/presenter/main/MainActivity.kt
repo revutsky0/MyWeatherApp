@@ -1,6 +1,7 @@
 package com.example.myweatherapp.presenter.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -40,12 +41,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun setObservable() {
         viewModel.weeklyWeather.observe(this@MainActivity, {
+            Log.d("MAIN", "UPDATE WEEKLY WEATHER")
             adapter.weeklyWeather = it
         })
         viewModel.currentWeather.observe(this,
             {
                 it?.let {
                     id = it.id
+                    Log.d("MAIN", "UPDATE CURRENT WEATHER")
                     with(binding) {
                         cvCurrentWeather.visibility = View.VISIBLE
                         tvCurrentTemp.text = it.currentTemp

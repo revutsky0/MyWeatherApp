@@ -7,6 +7,8 @@ import com.example.myweatherapp.data.database.dbmodels.DailyWeatherDbModel
 import com.example.myweatherapp.domain.models.CurrentWeather
 import com.example.myweatherapp.domain.models.DailyWeather
 import com.example.myweatherapp.domain.models.DailyWeatherListItem
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.roundToInt
 
 class WeatherMapper {
@@ -22,24 +24,24 @@ class WeatherMapper {
 
     fun dailyFromDbToDomain(daily: DailyWeatherDbModel) = DailyWeather(
         id = daily.dt,
-        dayOfWeek = "",
-        date = "",
-        dayTemp = "${daily.temp?.day}",
-        nightTemp = "${daily.temp?.night}",
+        dayOfWeek = getDayOfWeekFromStamp(daily.dt),
+        date = getDateFromStamp(daily.dt),
+        dayTemp = "${daily.temp?.day?.roundToInt()}",
+        nightTemp = "${daily.temp?.night?.roundToInt()}",
         status = "${daily.weather?.description}",
         clouds = daily.clouds ?: 0,
         humidity = daily.humidity ?: 0,
-        precipitation = 0,
+        precipitation = daily.precipitation ?: 0,
         pressure = daily.pressure ?: 0,
         wind = daily.windSpeed?.roundToInt() ?: 0
     )
 
     fun dailyFromDbToDomainListItem(daily: DailyWeatherDbModel) = DailyWeatherListItem(
         id = daily.dt,
-        dayOfWeek = "",
-        date = "",
-        dayTemp = "${daily.temp?.day}",
-        nightTemp = "${daily.temp?.night}",
+        dayOfWeek = getDayOfWeekFromStamp(daily.dt),
+        date = getDateFromStamp(daily.dt),
+        dayTemp = "${daily.temp?.day?.roundToInt()}",
+        nightTemp = "${daily.temp?.night?.roundToInt()}",
         status = "${daily.weather?.description}",
         windSpeed = daily.windSpeed ?: 0f,
         windUnits = "м/с",
@@ -68,6 +70,21 @@ class WeatherMapper {
             in 200..299 -> R.drawable.thunderstorm_bg
             else -> R.drawable.sunny_bg
         }
+    }
+
+    private fun getDateFromStamp(stamp: Long?) = getFromStamp(stamp, "dd MMMM")
+
+    private fun getDayOfWeekFromStamp(stamp: Long?) = getFromStamp(stamp, "E")
+
+    private fun getFromStamp(stamp: Long?, pattern: String): String {
+        if (stamp == null) {
+            return ""
+        }
+        val date = Date(stamp * 1000)
+        val simpleDateFormat = SimpleDateFormat(pattern, Locale.getDefault())
+        simpleDateFormat.timeZone = TimeZone.getDefault()
+
+        return simpleDateFormat.format(date)
     }
 
 }

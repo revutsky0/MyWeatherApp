@@ -17,7 +17,7 @@ class WeatherRepositoryImpl(application: Application) : WeatherRepository {
     private val database = WeatherDatabase.getInstance(application)
     private val mapper = WeatherMapper()
     private val manager = WorkManager.getInstance(application)
-    private val workDelay = 5L // В секундах!
+    private val workDelay = 5000L // В секундах!
 
     override suspend fun getCurrentWeather(): CurrentWeather {
         val dbModel = database.dao().getCurrentWeather()
@@ -35,10 +35,10 @@ class WeatherRepositoryImpl(application: Application) : WeatherRepository {
     }
 
     override suspend fun startLoad(lat: Float, lon: Float) {
-        manager.enqueueUniquePeriodicWork(
+        manager.enqueueUniqueWork(
             LoadWeatherWorker.NAME,
-            ExistingPeriodicWorkPolicy.REPLACE,
-            LoadWeatherWorker.getWorkRequest(workDelay,lat,lon)
+            ExistingWorkPolicy.REPLACE,
+            LoadWeatherWorker.getWorkRequest(workDelay, lat, lon)
         )
     }
 

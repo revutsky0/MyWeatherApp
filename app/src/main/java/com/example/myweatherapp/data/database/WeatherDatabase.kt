@@ -11,7 +11,7 @@ import com.example.myweatherapp.data.database.converters.WeatherConverter
 
 @Database(
     entities = [DailyWeatherDbModel::class, CurrentWeatherDbModel::class],
-    version = 3,
+    version = 1,
     exportSchema = false
 )
 @TypeConverters(WeatherConverter::class)

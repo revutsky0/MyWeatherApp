@@ -11,6 +11,7 @@ data class DailyWeatherDbModel(
     val temp: TempDb? = null,
     val pressure: Int? = null,
     val humidity: Int? = null,
+    val precipitation: Int? = null,
     val windSpeed: Float? = null,
     val windDeg: Int? = null,
     val weather: WeatherDetailsDb? = null,
