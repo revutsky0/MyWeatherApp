@@ -2,7 +2,6 @@ package com.example.myweatherapp.data.database.dbmodels
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.myweatherapp.data.network.pojo.oneCall.Temp
 
 @Entity(tableName = "weather_daily")
 data class DailyWeatherDbModel(

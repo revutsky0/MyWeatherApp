@@ -1,7 +1,6 @@
 package com.example.myweatherapp.presenter.main
 
 import android.app.Application
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

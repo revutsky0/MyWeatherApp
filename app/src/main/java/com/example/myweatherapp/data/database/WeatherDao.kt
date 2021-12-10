@@ -44,7 +44,7 @@ interface WeatherDao {
     suspend fun deleteDailyWeather()
 
     @Query("SELECT COUNT(*) FROM weather_daily")
-    suspend fun getWeatherDailyCount() : Int
+    suspend fun getWeatherDailyCount(): Int
 
     //endregion
 

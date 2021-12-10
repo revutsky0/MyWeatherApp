@@ -1,7 +1,6 @@
 package com.example.myweatherapp.data.repository
 
 import android.app.Application
-import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import com.example.myweatherapp.data.database.WeatherDatabase
