@@ -11,7 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class WeatherDetailViewModel(application: Application) : AndroidViewModel(application) {
+class DetailViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = WeatherRepositoryImpl(application)
     private val getDailyWeather = GetDailyWeatherUseCase(repository)

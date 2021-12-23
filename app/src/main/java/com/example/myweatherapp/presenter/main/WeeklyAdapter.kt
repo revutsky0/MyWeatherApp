@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myweatherapp.databinding.WeatherDailyItemBinding
 import com.example.myweatherapp.domain.models.DailyWeatherListItem
-import com.example.myweatherapp.presenter.detail.WeatherDetailActivity
 
 class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.WeeklyWeatherViewHolder>() {
 
@@ -15,6 +14,8 @@ class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.WeeklyWeatherViewHolder
             field = value
             notifyDataSetChanged()
         }
+
+    var onWeatherDailyItemClickListener: OnWeatherDailyItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeeklyWeatherViewHolder {
         val view =
@@ -40,14 +41,18 @@ class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.WeeklyWeatherViewHolder
         return weeklyWeather.size
     }
 
-    class WeeklyWeatherViewHolder(val binding: WeatherDailyItemBinding) :
+
+    fun interface OnWeatherDailyItemClickListener {
+        fun onClick(id: Long)
+    }
+
+    inner class WeeklyWeatherViewHolder(val binding: WeatherDailyItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var id: Long = 0
 
         init {
             itemView.setOnClickListener {
-                val intent = WeatherDetailActivity.getIntent(itemView.context, id)
-                itemView.context.startActivity(intent)
+                onWeatherDailyItemClickListener?.onClick(id)
             }
         }
     }
