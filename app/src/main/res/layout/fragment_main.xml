@@ -185,7 +185,6 @@
                 android:id="@+id/etCity"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/main_enter_city_name_hint"
                 android:inputType="textPersonName"
@@ -238,6 +237,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guidelineHalfScreen" />
+
+        <SearchView
+            android:layout_width="409dp"
+            android:layout_height="127dp"
+            app:layout_constraintBottom_toTopOf="@+id/clCurrentWeather"
+            app:layout_constraintTop_toBottomOf="@+id/clFindCity"
+            tools:layout_editor_absoluteX="1dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

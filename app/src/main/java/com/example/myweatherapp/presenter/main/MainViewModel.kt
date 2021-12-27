@@ -45,6 +45,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val scope = CoroutineScope(Dispatchers.IO)
     private var city: City? = null
 
+    private val _cityNotFound = MutableLiveData<Any>()
+    val cityNotFound : LiveData<Any> = _cityNotFound
+
     init {
         scope.launch {
             loadData(city = getLastCity())
@@ -54,6 +57,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun findCity(name: String) {
         scope.launch {
             val cityList = getCityList(name)
+            if(cityList.isEmpty()) {
+                _cityNotFound.postValue(Any())
+                return@launch
+            }
             loadData(cityList[0])
         }
     }
