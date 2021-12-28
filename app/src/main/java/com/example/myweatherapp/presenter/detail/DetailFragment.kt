@@ -50,6 +50,7 @@ class DetailFragment : Fragment() {
                     tvDetailsPrecipitation.text = "${it.precipitation}%"
                     tvDetailsWind.text = "${it.wind} $windUnits"
                     tvDetailsPressure.text = "${it.pressure} $pressureUnits"
+                    tvDetailsClouds
                 }
             }
         })

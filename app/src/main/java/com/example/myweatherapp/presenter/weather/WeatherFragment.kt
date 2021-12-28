@@ -1,4 +1,4 @@
-package com.example.myweatherapp.presenter.main
+package com.example.myweatherapp.presenter.weather
 
 import android.os.Bundle
 import android.util.Log
@@ -9,13 +9,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.myweatherapp.R
-import com.example.myweatherapp.databinding.FragmentMainBinding
+import com.example.myweatherapp.databinding.FragmentWeatherBinding
+import com.example.myweatherapp.domain.models.City
 import com.example.myweatherapp.presenter.detail.DetailFragment
 
-class MainFragment : Fragment() {
+class WeatherFragment : Fragment() {
 
-    private lateinit var binding: FragmentMainBinding
-    private val viewModel by lazy { ViewModelProvider(this)[MainViewModel::class.java] }
+    private lateinit var binding: FragmentWeatherBinding
+    private val viewModel by lazy { ViewModelProvider(this)[WeatherViewModel::class.java] }
     private val adapter: WeeklyAdapter by lazy { WeeklyAdapter() }
     private var currentBackground = R.drawable.clouds_bg
     private var id = 0L
@@ -25,23 +26,27 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentMainBinding.inflate(inflater, container, false)
+        binding = FragmentWeatherBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     companion object {
 
+        private const val PARAM_CITY = "city"
+
         @JvmStatic
-        fun newInstance() =
-            MainFragment().apply {
+        fun newInstance(city: City) =
+            WeatherFragment().apply {
                 arguments = Bundle().apply {
-                    //
+                    putSerializable(PARAM_CITY,city)
                 }
             }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val city = arguments?.getSerializable(PARAM_CITY) as City
+        viewModel.loadCityWeather(city)
         setOnClickListeners()
         setObservable()
     }
@@ -53,9 +58,6 @@ class MainFragment : Fragment() {
                     launchDetailFragment(it)
                 }
             rvWeeklyWeather.adapter = adapter
-            ibFindCity.setOnClickListener {
-                viewModel.findCity(etCity.text.toString())
-            }
             clCurrentWeather.setOnClickListener {
                 launchDetailFragment(id)
             }

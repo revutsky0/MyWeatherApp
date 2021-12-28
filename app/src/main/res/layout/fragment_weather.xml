@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presenter.main.MainFragment">
+    tools:context=".presenter.weather.WeatherFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/MainConstraintLayout"
@@ -19,7 +19,7 @@
             app:layout_constraintBottom_toTopOf="@+id/tvWeeklyWeatherTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/clFindCity">
+            app:layout_constraintTop_toBottomOf="@+id/citySearchView">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvCurrentWeather"
@@ -60,7 +60,6 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tvCurrentTemp" />
-
 
                     <TextView
                         android:id="@+id/tvWeatherStatus"
@@ -157,56 +156,6 @@
             </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clFindCity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@color/main_current_temperature_background"
-            android:padding="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageButton
-                android:id="@+id/ibFindCity"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:adjustViewBounds="true"
-                android:background="#00000000"
-                android:contentDescription="@string/main_find_city_button_description"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/ic_menu_search" />
-
-            <EditText
-                android:id="@+id/etCity"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/main_enter_city_name_hint"
-                android:inputType="textPersonName"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/ibFindCity"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/findCityContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            app:cardCornerRadius="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </androidx.cardview.widget.CardView>
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineHalfScreen"
             android:layout_width="wrap_content"
@@ -239,11 +188,13 @@
             app:layout_constraintTop_toTopOf="@+id/guidelineHalfScreen" />
 
         <SearchView
-            android:layout_width="409dp"
-            android:layout_height="127dp"
-            app:layout_constraintBottom_toTopOf="@+id/clCurrentWeather"
-            app:layout_constraintTop_toBottomOf="@+id/clFindCity"
-            tools:layout_editor_absoluteX="1dp" />
+            android:id="@+id/citySearchView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/main_current_temperature_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

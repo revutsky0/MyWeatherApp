@@ -1,4 +1,4 @@
-package com.example.myweatherapp.presenter.main
+package com.example.myweatherapp.presenter.weather
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -40,7 +40,6 @@ class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.WeeklyWeatherViewHolder
     override fun getItemCount(): Int {
         return weeklyWeather.size
     }
-
 
     fun interface OnWeatherDailyItemClickListener {
         fun onClick(id: Long)
