@@ -12,6 +12,7 @@ import com.example.myweatherapp.R
 import com.example.myweatherapp.databinding.FragmentWeatherBinding
 import com.example.myweatherapp.domain.models.City
 import com.example.myweatherapp.presenter.detail.DetailFragment
+import com.example.myweatherapp.presenter.search.SearchCityFragment
 
 class WeatherFragment : Fragment() {
 
@@ -38,7 +39,7 @@ class WeatherFragment : Fragment() {
         fun newInstance(city: City) =
             WeatherFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(PARAM_CITY,city)
+                    putSerializable(PARAM_CITY, city)
                 }
             }
     }
@@ -61,6 +62,7 @@ class WeatherFragment : Fragment() {
             clCurrentWeather.setOnClickListener {
                 launchDetailFragment(id)
             }
+            weatherSearchButton.setOnClickListener { launchSearchCityFragment() }
         }
     }
 
@@ -93,9 +95,6 @@ class WeatherFragment : Fragment() {
                 binding.tvNightTemp.text = it.nightTemp
             }
         })
-        viewModel.cityNotFound.observe(viewLifecycleOwner, {
-            Toast.makeText(context, "City is not fount", Toast.LENGTH_LONG).show()
-        })
     }
 
     private fun launchDetailFragment(id: Long) {
@@ -104,5 +103,12 @@ class WeatherFragment : Fragment() {
             .addToBackStack(null)
             .commit()
     }
+
+    private fun launchSearchCityFragment() {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.mainActivityFCV, SearchCityFragment.newInstance())
+            .commit()
+    }
+
 }
 

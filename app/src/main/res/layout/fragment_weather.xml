@@ -19,7 +19,7 @@
             app:layout_constraintBottom_toTopOf="@+id/tvWeeklyWeatherTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/citySearchView">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvCurrentWeather"
@@ -187,13 +187,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guidelineHalfScreen" />
 
-        <SearchView
-            android:id="@+id/citySearchView"
-            android:layout_width="0dp"
+        <ImageButton
+            android:id="@+id/weatherSearchButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/main_current_temperature_background"
+            android:src="?android:attr/actionModeWebSearchDrawable"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

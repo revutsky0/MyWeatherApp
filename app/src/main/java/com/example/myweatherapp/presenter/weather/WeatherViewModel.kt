@@ -4,12 +4,14 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.myweatherapp.data.repository.CityRepositoryImpl
 import com.example.myweatherapp.data.repository.WeatherRepositoryImpl
 import com.example.myweatherapp.domain.models.City
 import com.example.myweatherapp.domain.models.CurrentWeather
 import com.example.myweatherapp.domain.models.DailyWeather
 import com.example.myweatherapp.domain.models.DailyWeatherListItem
 import com.example.myweatherapp.domain.usecase.city.GetCityWeatherUseCase
+import com.example.myweatherapp.domain.usecase.city.SaveLastCityUseCase
 import com.example.myweatherapp.domain.usecase.weather.GetCurrentWeatherUseCase
 import com.example.myweatherapp.domain.usecase.weather.GetDailyWeatherListUseCase
 import com.example.myweatherapp.domain.usecase.weather.GetDailyWeatherUseCase
@@ -21,11 +23,13 @@ import kotlinx.coroutines.launch
 class WeatherViewModel(application: Application) : AndroidViewModel(application) {
 
     private val weatherRepository = WeatherRepositoryImpl(application)
+    private val cityRepository = CityRepositoryImpl(application)
 
     private val getCurrentWeather = GetCurrentWeatherUseCase(weatherRepository)
     private val getDailyWeather = GetDailyWeatherUseCase(weatherRepository)
     private val getDailyWeatherList = GetDailyWeatherListUseCase(weatherRepository)
     private val getCityWeather = GetCityWeatherUseCase(weatherRepository)
+    private val saveLastCity = SaveLastCityUseCase(cityRepository)
 
     private val _currentWeather = MutableLiveData<CurrentWeather>()
     val currentWeather: LiveData<CurrentWeather> = _currentWeather
@@ -37,10 +41,6 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
     val weeklyWeather: LiveData<List<DailyWeatherListItem>> = _weeklyWeather
 
     private val scope = CoroutineScope(Dispatchers.IO)
-    private var city: City? = null
-
-    private val _cityNotFound = MutableLiveData<Any>()
-    val cityNotFound: LiveData<Any> = _cityNotFound
 
     fun loadCityWeather(city: City?) {
         if (city == null) return
@@ -50,7 +50,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
     }
 
     private suspend fun loadData(city: City) {
-        this.city = city
+        saveLastCity(city)
         getCityWeather(city)
         val current = getCurrentWeather()
         val daily = getDailyWeather(current.id)

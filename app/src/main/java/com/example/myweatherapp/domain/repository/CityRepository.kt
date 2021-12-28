@@ -5,4 +5,5 @@ import com.example.myweatherapp.domain.models.City
 interface CityRepository {
     suspend fun getCityList(name: String): List<City>
     fun getLastCity(): City?
+    fun saveLastCity(city: City)
 }

@@ -16,13 +16,20 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
     private val repository = CityRepositoryImpl(application)
     private val getCityList = GetCityListUseCase(repository)
 
+    private val _cityNotFound = MutableLiveData<Any>()
+    val cityNotFound: LiveData<Any> = _cityNotFound
+
     private val _cityList = MutableLiveData<List<City>>()
     val cityList: LiveData<List<City>> = _cityList
 
     fun searchCity(cityName: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val cityList = getCityList(cityName)
-            _cityList.postValue(cityList)
+            if (cityList.isEmpty()) {
+                _cityNotFound.postValue(Any())
+            } else {
+                _cityList.postValue(cityList)
+            }
         }
     }
 

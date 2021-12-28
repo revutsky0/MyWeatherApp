@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.myweatherapp.R
 import com.example.myweatherapp.databinding.FragmentSearchCityBinding
 import com.example.myweatherapp.domain.models.City
 import com.example.myweatherapp.presenter.weather.WeatherFragment
-
 
 class SearchCityFragment : Fragment() {
 
@@ -44,12 +44,19 @@ class SearchCityFragment : Fragment() {
             val cityName = binding.searchCityName.text.toString()
             viewModel.searchCity(cityName)
         }
+        binding.searchCityList.setOnItemClickListener { _, _, position, _ ->
+            val city = listAdapter.getItem(position) ?: return@setOnItemClickListener
+            launchWeatherFragment(city)
+        }
     }
 
     private fun setObservable() {
         viewModel.cityList.observe(viewLifecycleOwner, {
             listAdapter.clear()
             listAdapter.addAll(it)
+        })
+        viewModel.cityNotFound.observe(viewLifecycleOwner, {
+            Toast.makeText(context, "City is not fount", Toast.LENGTH_LONG).show()
         })
     }
 

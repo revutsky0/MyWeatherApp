@@ -32,13 +32,24 @@ class CityRepositoryImpl(context: Context) : CityRepository {
             ) {
                 null
             } else {
-                City(
+                val ret = City(
                     name = getString(CITY_PARAM_NAME, "") ?: "",
                     country = getString(CITY_PARAM_COUNTRY, "") ?: "",
                     lat = getFloat(CITY_PARAM_LAT, 0f),
                     lon = getFloat(CITY_PARAM_LON, 0f)
                 )
+                ret
             }
         }
+
+    }
+
+    override fun saveLastCity(city: City) {
+        prefs.edit()
+            .putString(CITY_PARAM_NAME, city.name)
+            .putString(CITY_PARAM_COUNTRY, city.country)
+            .putFloat(CITY_PARAM_LAT, city.lat)
+            .putFloat(CITY_PARAM_LON, city.lon)
+            .apply()
     }
 }
