@@ -12,6 +12,8 @@ import com.example.myweatherapp.data.network.pojo.oneCall.WeatherDailyPojo
 import com.example.myweatherapp.data.network.pojo.oneCall.WeatherDetailsPojo
 import com.example.myweatherapp.domain.models.City
 import com.example.myweatherapp.domain.models.LocalNames
+import com.google.gson.Gson
+import org.json.JSONObject
 import java.util.*
 
 class NetworkMapper {
@@ -80,8 +82,9 @@ class NetworkMapper {
         return (calendar.timeInMillis / 1000L)
     }
 
-    private fun localNamesModel(localNames: LocalNamesData) = LocalNames(
-        ru = localNames.ru,
-        en = localNames.en
-    )
+    private fun localNamesModel(localNames: LocalNamesData) = JSONObject(Gson().toJson(localNames))
+//        LocalNames(
+//        ru = localNames.ru,
+//        en = localNames.en
+//    )
 }

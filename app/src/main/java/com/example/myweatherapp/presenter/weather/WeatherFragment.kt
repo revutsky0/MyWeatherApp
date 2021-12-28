@@ -23,7 +23,6 @@ class WeatherFragment : Fragment() {
     private var currentBackground = R.drawable.clouds_bg
     private var id = 0L
     private lateinit var city: City
-    private val lang = Locale.getDefault().language;
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -81,7 +80,7 @@ class WeatherFragment : Fragment() {
                     Log.d("MAIN", "UPDATE CURRENT WEATHER")
                     with(binding) {
                         cvCurrentWeather.visibility = View.VISIBLE
-                        tvCityName.text = city.localNames?.ru ?: city.name
+                        tvCityName.text = city.getLocalName()
                         tvCurrentTemp.text = it.currentTemp
                         tvWeatherStatus.text = it.status
                         val background = it.background

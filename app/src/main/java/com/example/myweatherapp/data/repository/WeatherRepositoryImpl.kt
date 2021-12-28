@@ -16,7 +16,7 @@ class WeatherRepositoryImpl(application: Application) : WeatherRepository {
     private val database = WeatherDatabase.getInstance(application)
     private val mapper = WeatherMapper()
     private val manager = WorkManager.getInstance(application)
-    private val workDelay = 5000L // В секундах!
+    private val workDelay = 10000L
 
     override suspend fun getCurrentWeather(): CurrentWeather {
         val dbModel = database.dao().getCurrentWeather()

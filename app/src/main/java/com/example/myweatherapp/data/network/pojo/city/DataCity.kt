@@ -24,5 +24,5 @@ data class DataCity(
 
     @SerializedName("local_names")
     @Expose
-    val localNames: LocalNamesData? = null
+    val localNames: LocalNamesData?
 )

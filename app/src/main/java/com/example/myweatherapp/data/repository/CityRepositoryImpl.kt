@@ -5,6 +5,7 @@ import com.example.myweatherapp.data.mappers.NetworkMapper
 import com.example.myweatherapp.data.network.api.ApiFactory
 import com.example.myweatherapp.domain.models.City
 import com.example.myweatherapp.domain.repository.CityRepository
+import org.json.JSONObject
 
 class CityRepositoryImpl(context: Context) : CityRepository {
 
@@ -14,6 +15,7 @@ class CityRepositoryImpl(context: Context) : CityRepository {
         private const val CITY_PARAM_COUNTRY = "CityCountry"
         private const val CITY_PARAM_LAT = "CityLat"
         private const val CITY_PARAM_LON = "CityLon"
+        private const val CITY_PARAM_LOCAL_NAMES = "LocaleNames"
     }
 
     private val prefs = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
@@ -32,13 +34,13 @@ class CityRepositoryImpl(context: Context) : CityRepository {
             ) {
                 null
             } else {
-                val ret = City(
+                City(
                     name = getString(CITY_PARAM_NAME, "") ?: "",
                     country = getString(CITY_PARAM_COUNTRY, "") ?: "",
                     lat = getFloat(CITY_PARAM_LAT, 0f),
-                    lon = getFloat(CITY_PARAM_LON, 0f)
+                    lon = getFloat(CITY_PARAM_LON, 0f),
+                    localNames = JSONObject(getString(CITY_PARAM_LOCAL_NAMES, "{}"))
                 )
-                ret
             }
         }
 
@@ -50,6 +52,7 @@ class CityRepositoryImpl(context: Context) : CityRepository {
             .putString(CITY_PARAM_COUNTRY, city.country)
             .putFloat(CITY_PARAM_LAT, city.lat)
             .putFloat(CITY_PARAM_LON, city.lon)
+            .putString(CITY_PARAM_LOCAL_NAMES, city.localNames.toString())
             .apply()
     }
 }
