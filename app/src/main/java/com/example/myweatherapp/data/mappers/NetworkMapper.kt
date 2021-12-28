@@ -4,12 +4,14 @@ import com.example.myweatherapp.data.database.dbmodels.CurrentWeatherDbModel
 import com.example.myweatherapp.data.database.dbmodels.DailyWeatherDbModel
 import com.example.myweatherapp.data.database.dbmodels.TempDb
 import com.example.myweatherapp.data.database.dbmodels.WeatherDetailsDb
-import com.example.myweatherapp.data.network.pojo.DataCity
+import com.example.myweatherapp.data.network.pojo.city.DataCity
+import com.example.myweatherapp.data.network.pojo.city.LocalNamesData
 import com.example.myweatherapp.data.network.pojo.oneCall.Temp
 import com.example.myweatherapp.data.network.pojo.oneCall.WeatherCurrentPojo
 import com.example.myweatherapp.data.network.pojo.oneCall.WeatherDailyPojo
 import com.example.myweatherapp.data.network.pojo.oneCall.WeatherDetailsPojo
 import com.example.myweatherapp.domain.models.City
+import com.example.myweatherapp.domain.models.LocalNames
 import java.util.*
 
 class NetworkMapper {
@@ -49,7 +51,12 @@ class NetworkMapper {
         name = city.name ?: "",
         country = city.country ?: "",
         lat = city.lat ?: 0f,
-        lon = city.lon ?: 0f
+        lon = city.lon ?: 0f,
+        localNames = if (city.localNames != null) {
+            localNamesModel(city.localNames)
+        } else {
+            null
+        }
     )
 
     private fun tempToDb(temp: Temp) = TempDb(
@@ -73,4 +80,8 @@ class NetworkMapper {
         return (calendar.timeInMillis / 1000L)
     }
 
+    private fun localNamesModel(localNames: LocalNamesData) = LocalNames(
+        ru = localNames.ru,
+        en = localNames.en
+    )
 }

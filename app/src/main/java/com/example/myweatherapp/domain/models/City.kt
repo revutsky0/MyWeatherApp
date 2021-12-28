@@ -6,5 +6,6 @@ data class City(
     val name: String,
     val country: String,
     val lat: Float,
-    val lon: Float
+    val lon: Float,
+    val localNames: LocalNames? = null
 ) : Serializable

@@ -13,6 +13,7 @@ import com.example.myweatherapp.databinding.FragmentWeatherBinding
 import com.example.myweatherapp.domain.models.City
 import com.example.myweatherapp.presenter.detail.DetailFragment
 import com.example.myweatherapp.presenter.search.SearchCityFragment
+import java.util.*
 
 class WeatherFragment : Fragment() {
 
@@ -22,6 +23,7 @@ class WeatherFragment : Fragment() {
     private var currentBackground = R.drawable.clouds_bg
     private var id = 0L
     private lateinit var city: City
+    private val lang = Locale.getDefault().language;
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,7 +81,7 @@ class WeatherFragment : Fragment() {
                     Log.d("MAIN", "UPDATE CURRENT WEATHER")
                     with(binding) {
                         cvCurrentWeather.visibility = View.VISIBLE
-                        tvCityName.text = city.name
+                        tvCityName.text = city.localNames?.ru ?: city.name
                         tvCurrentTemp.text = it.currentTemp
                         tvWeatherStatus.text = it.status
                         val background = it.background

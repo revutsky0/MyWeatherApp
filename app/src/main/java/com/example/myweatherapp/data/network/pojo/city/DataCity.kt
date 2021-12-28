@@ -1,8 +1,9 @@
-package com.example.myweatherapp.data.network.pojo
+package com.example.myweatherapp.data.network.pojo.city
 
 import com.google.gson.annotations.Expose
 
 import com.google.gson.annotations.SerializedName
+import org.json.JSONObject
 
 data class DataCity(
     @SerializedName("name")
@@ -21,7 +22,7 @@ data class DataCity(
     @Expose
     val country: String? = null,
 
-    @SerializedName("state")
+    @SerializedName("local_names")
     @Expose
-    val state: String? = null
+    val localNames: LocalNamesData? = null
 )

@@ -1,6 +1,6 @@
 package com.example.myweatherapp.data.network.api
 
-import com.example.myweatherapp.data.network.pojo.DataCity
+import com.example.myweatherapp.data.network.pojo.city.DataCity
 import com.example.myweatherapp.data.network.pojo.oneCall.DataOneCall
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -46,6 +46,7 @@ interface ApiService {
     suspend fun getDataOfCity(
         @Query(PARAM_NAME_CITY) cityName: String,
         @Query(PARAM_NAME_API_KEY) apiKey: String = API_KEY,
+        @Query(PARAM_NAME_LANGUAGE) lang: String = PARAM_LANGUAGE_RUSSIAN
     ): List<DataCity>
 
     @GET(ENDPOINT_ONE_CALL)
