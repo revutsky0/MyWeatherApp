@@ -21,6 +21,7 @@ class WeatherFragment : Fragment() {
     private val adapter: WeeklyAdapter by lazy { WeeklyAdapter() }
     private var currentBackground = R.drawable.clouds_bg
     private var id = 0L
+    private lateinit var city: City
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +47,7 @@ class WeatherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val city = arguments?.getSerializable(PARAM_CITY) as City
+        city = arguments?.getSerializable(PARAM_CITY) as City
         viewModel.loadCityWeather(city)
         setOnClickListeners()
         setObservable()
@@ -78,6 +79,7 @@ class WeatherFragment : Fragment() {
                     Log.d("MAIN", "UPDATE CURRENT WEATHER")
                     with(binding) {
                         cvCurrentWeather.visibility = View.VISIBLE
+                        tvCityName.text = city.name
                         tvCurrentTemp.text = it.currentTemp
                         tvWeatherStatus.text = it.status
                         val background = it.background
