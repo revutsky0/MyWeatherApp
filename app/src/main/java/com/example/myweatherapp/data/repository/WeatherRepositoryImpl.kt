@@ -18,9 +18,13 @@ class WeatherRepositoryImpl(application: Application) : WeatherRepository {
     private val manager = WorkManager.getInstance(application)
     private val workDelay = 10000L
 
-    override suspend fun getCurrentWeather(): CurrentWeather {
+    override suspend fun getCurrentWeather(): CurrentWeather? {
         val dbModel = database.dao().getCurrentWeather()
-        return mapper.currentFromDbToDomain(dbModel)
+        return if (dbModel!=null) {
+            mapper.currentFromDbToDomain(dbModel)
+        } else {
+            null
+        }
     }
 
     override suspend fun getDailyWeatherList(): List<DailyWeatherListItem> {

@@ -13,7 +13,7 @@ interface WeatherDao {
     //region WEATHER_CURRENT
 
     @Query("SELECT * FROM weather_current LIMIT 1")
-    suspend fun getCurrentWeather(): CurrentWeatherDbModel
+    suspend fun getCurrentWeather(): CurrentWeatherDbModel?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCurrentWeather(weatherCurrent: CurrentWeatherDbModel)

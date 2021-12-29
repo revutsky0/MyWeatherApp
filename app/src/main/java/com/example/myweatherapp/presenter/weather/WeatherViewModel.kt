@@ -53,10 +53,12 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         saveLastCity(city)
         getCityWeather(city)
         val current = getCurrentWeather()
-        val daily = getDailyWeather(current.id)
+        current?.let {
+            val daily = getDailyWeather(current.id)
+            _currentWeather.postValue(it)
+            _currentDailyWeather.postValue(daily)
+        }
         val dailyList = getDailyWeatherList()
-        _currentWeather.postValue(current)
-        _currentDailyWeather.postValue(daily)
         _weeklyWeather.postValue(dailyList)
     }
 
