@@ -5,7 +5,9 @@ import com.example.myweatherapp.data.mappers.NetworkMapper
 import com.example.myweatherapp.data.network.api.ApiFactory
 import com.example.myweatherapp.domain.models.City
 import com.example.myweatherapp.domain.repository.CityRepository
+import org.json.JSONException
 import org.json.JSONObject
+import java.lang.Exception
 
 class CityRepositoryImpl(context: Context) : CityRepository {
 
@@ -39,7 +41,11 @@ class CityRepositoryImpl(context: Context) : CityRepository {
                     country = getString(CITY_PARAM_COUNTRY, "") ?: "",
                     lat = getFloat(CITY_PARAM_LAT, 0f),
                     lon = getFloat(CITY_PARAM_LON, 0f),
-                    localNames = JSONObject(getString(CITY_PARAM_LOCAL_NAMES, "{}"))
+                    localNames = try {
+                        JSONObject(getString(CITY_PARAM_LOCAL_NAMES, "{}") ?: "{}")
+                    } catch (e: Exception) {
+                        null
+                    }
                 )
             }
         }

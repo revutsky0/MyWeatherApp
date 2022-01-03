@@ -7,7 +7,7 @@ data class DailyWeatherListItem(
     val dayTemp: String,
     val status: String,
     val nightTemp: String,
-    val windSpeed: Float,
+    val windSpeed: Int,
     val windUnits: String,
     val icon: Int
 )

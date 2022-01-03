@@ -20,7 +20,7 @@ class SearchCityFragment : Fragment() {
     private val listAdapter by lazy {
         ArrayAdapter<City>(
             requireContext(),
-            android.R.layout.simple_list_item_1
+            R.layout.search_city_list_item
         )
     }
 
@@ -56,7 +56,7 @@ class SearchCityFragment : Fragment() {
             listAdapter.addAll(it)
         })
         viewModel.cityNotFound.observe(viewLifecycleOwner, {
-            Toast.makeText(context, "City is not fount", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, getString(R.string.city_not_found), Toast.LENGTH_LONG).show()
         })
     }
 

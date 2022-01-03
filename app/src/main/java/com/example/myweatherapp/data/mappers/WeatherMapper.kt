@@ -43,7 +43,7 @@ class WeatherMapper {
         dayTemp = "${daily.temp?.day?.roundToInt()}",
         nightTemp = "${daily.temp?.night?.roundToInt()}",
         status = "${daily.weather?.description}",
-        windSpeed = daily.windSpeed ?: 0f,
+        windSpeed = daily.windSpeed?.roundToInt() ?: 0,
         windUnits = "м/с",
         icon = if (daily.weather != null) {
             getIcon(daily.weather.id)
