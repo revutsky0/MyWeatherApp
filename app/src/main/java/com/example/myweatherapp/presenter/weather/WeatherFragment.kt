@@ -13,8 +13,10 @@ import com.example.myweatherapp.databinding.FragmentWeatherBinding
 import com.example.myweatherapp.domain.models.City
 import com.example.myweatherapp.presenter.detail.DetailFragment
 import com.example.myweatherapp.presenter.search.SearchCityFragment
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
+@AndroidEntryPoint
 class WeatherFragment : Fragment() {
 
     private lateinit var binding: FragmentWeatherBinding

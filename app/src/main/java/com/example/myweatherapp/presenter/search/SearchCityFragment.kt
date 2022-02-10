@@ -12,7 +12,9 @@ import com.example.myweatherapp.R
 import com.example.myweatherapp.databinding.FragmentSearchCityBinding
 import com.example.myweatherapp.domain.models.City
 import com.example.myweatherapp.presenter.weather.WeatherFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchCityFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchCityBinding

@@ -5,11 +5,16 @@ import com.example.myweatherapp.data.mappers.NetworkMapper
 import com.example.myweatherapp.data.network.api.ApiFactory
 import com.example.myweatherapp.domain.models.City
 import com.example.myweatherapp.domain.repository.CityRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.json.JSONException
 import org.json.JSONObject
 import java.lang.Exception
+import javax.inject.Inject
 
-class CityRepositoryImpl(context: Context) : CityRepository {
+class CityRepositoryImpl @Inject constructor(
+    @ApplicationContext context: Context,
+    private val mapper: NetworkMapper
+) : CityRepository {
 
     companion object {
         private const val SHARED_PREFS_NAME = "WeatherParams"
@@ -21,7 +26,6 @@ class CityRepositoryImpl(context: Context) : CityRepository {
     }
 
     private val prefs = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
-    private val mapper = NetworkMapper()
 
     override suspend fun getCityList(name: String): List<City> =
         ApiFactory.apiService.getDataOfCity(name).map { mapper.cityToModel(it) }

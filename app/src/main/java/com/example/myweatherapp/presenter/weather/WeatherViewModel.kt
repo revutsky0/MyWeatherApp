@@ -1,29 +1,31 @@
 package com.example.myweatherapp.presenter.weather
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.myweatherapp.data.repository.CityRepositoryImpl
-import com.example.myweatherapp.data.repository.WeatherRepositoryImpl
+import androidx.lifecycle.ViewModel
 import com.example.myweatherapp.domain.models.City
 import com.example.myweatherapp.domain.models.CurrentWeather
 import com.example.myweatherapp.domain.models.DailyWeather
 import com.example.myweatherapp.domain.models.DailyWeatherListItem
+import com.example.myweatherapp.domain.repository.CityRepository
+import com.example.myweatherapp.domain.repository.WeatherRepository
 import com.example.myweatherapp.domain.usecase.city.GetCityWeatherUseCase
 import com.example.myweatherapp.domain.usecase.city.SaveLastCityUseCase
 import com.example.myweatherapp.domain.usecase.weather.GetCurrentWeatherUseCase
 import com.example.myweatherapp.domain.usecase.weather.GetDailyWeatherListUseCase
 import com.example.myweatherapp.domain.usecase.weather.GetDailyWeatherUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class WeatherViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val weatherRepository = WeatherRepositoryImpl(application)
-    private val cityRepository = CityRepositoryImpl(application)
+@HiltViewModel
+class WeatherViewModel @Inject constructor(
+    private val weatherRepository: WeatherRepository,
+    private val cityRepository: CityRepository
+) : ViewModel() {
 
     private val getCurrentWeather = GetCurrentWeatherUseCase(weatherRepository)
     private val getDailyWeather = GetDailyWeatherUseCase(weatherRepository)

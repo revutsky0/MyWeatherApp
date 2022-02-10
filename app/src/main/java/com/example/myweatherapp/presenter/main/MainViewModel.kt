@@ -3,17 +3,24 @@ package com.example.myweatherapp.presenter.main
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import com.example.myweatherapp.data.repository.CityRepositoryImpl
 import com.example.myweatherapp.domain.models.City
+import com.example.myweatherapp.domain.repository.CityRepository
 import com.example.myweatherapp.domain.usecase.city.LoadLastCityUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val cityRepository: CityRepository
+) : ViewModel() {
 
-    private val repository = CityRepositoryImpl(application)
-    private val getLastCityUseCase = LoadLastCityUseCase(repository)
+    private val getLastCityUseCase = LoadLastCityUseCase(cityRepository)
 
     fun getLastCity(): City? {
         var lastCity = getLastCityUseCase()

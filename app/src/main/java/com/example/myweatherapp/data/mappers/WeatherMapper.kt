@@ -9,9 +9,10 @@ import com.example.myweatherapp.domain.models.DailyWeather
 import com.example.myweatherapp.domain.models.DailyWeatherListItem
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 import kotlin.math.roundToInt
 
-class WeatherMapper {
+class WeatherMapper @Inject constructor() {
 
     fun currentFromDbToDomain(current: CurrentWeatherDbModel) = CurrentWeather(
         id = current.dt,

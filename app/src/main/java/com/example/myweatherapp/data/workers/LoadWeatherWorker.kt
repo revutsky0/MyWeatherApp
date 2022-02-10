@@ -4,16 +4,25 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
+import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
-import com.example.myweatherapp.data.database.WeatherDatabase
+import com.example.myweatherapp.data.database.AppDatabase
 import com.example.myweatherapp.data.mappers.NetworkMapper
 import com.example.myweatherapp.data.network.api.ApiFactory
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.delay
+import javax.inject.Inject
 
-class LoadWeatherWorker(private val appContext: Context, params: WorkerParameters) :
+@HiltWorker
+class LoadWeatherWorker @AssistedInject constructor(
+    @Assisted private val appContext: Context,
+    @Assisted params: WorkerParameters,
+    private val database: AppDatabase,
+    private val mapper: NetworkMapper) :
     CoroutineWorker(
         appContext,
         params
@@ -38,13 +47,18 @@ class LoadWeatherWorker(private val appContext: Context, params: WorkerParameter
                 .build()
     }
 
-    private val mapper = NetworkMapper()
+//    @Inject
+//    lateinit var database: AppDatabase
+//
+//    @Inject
+//    lateinit var mapper: NetworkMapper
+//    private val mapper = NetworkMapper()
+
     private val connectivityManager =
         appContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     override suspend fun doWork(): Result {
         Log.d("MAIN", "WORKER IS RUN")
-        val database = WeatherDatabase.getInstance(context = appContext)
         val lat = inputData.getFloat(LAT_PARAM, 0f)
         val lon = inputData.getFloat(LON_PARAM, 0f)
         val delay = inputData.getLong(DELAY_PARAM, 5000)
@@ -65,16 +79,17 @@ class LoadWeatherWorker(private val appContext: Context, params: WorkerParameter
         return Result.success()
     }
 
-    private fun isInternetAvailable(): Boolean {
-        val networkCapabilities = connectivityManager.activeNetwork ?: return false
-        val actNw =
-            connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
-        return when {
-            actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-            actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-            actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-            else -> false
-        }
-    }
+    private fun isInternetAvailable() = true
+//    : Boolean {
+//        val networkCapabilities = connectivityManager.activeNetwork ?: return false
+//        val actNw =
+//            connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+//        return when {
+//            actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+//            actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+//            actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+//            else -> false
+//        }
+//    }
 
 }
