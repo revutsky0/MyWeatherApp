@@ -47,13 +47,6 @@ class LoadWeatherWorker @AssistedInject constructor(
                 .build()
     }
 
-//    @Inject
-//    lateinit var database: AppDatabase
-//
-//    @Inject
-//    lateinit var mapper: NetworkMapper
-//    private val mapper = NetworkMapper()
-
     private val connectivityManager =
         appContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 

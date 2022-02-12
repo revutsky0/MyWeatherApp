@@ -19,10 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val cityRepository: CityRepository
+    private val getCityList: GetCityListUseCase
 ) : ViewModel() {
-
-    private val getCityList = GetCityListUseCase(cityRepository)
 
     private val _cityNotFound = MutableLiveData<Any>()
     val cityNotFound: LiveData<Any> = _cityNotFound

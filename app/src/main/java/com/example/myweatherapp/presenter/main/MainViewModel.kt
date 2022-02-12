@@ -17,13 +17,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val cityRepository: CityRepository
+    private val getLastCityUseCase: LoadLastCityUseCase
 ) : ViewModel() {
 
-    private val getLastCityUseCase = LoadLastCityUseCase(cityRepository)
-
     fun getLastCity(): City? {
-        var lastCity = getLastCityUseCase()
+        val lastCity = getLastCityUseCase()
         Log.d("LAST", "Last city is $lastCity")
         return lastCity
     }

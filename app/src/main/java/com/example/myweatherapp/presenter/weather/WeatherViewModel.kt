@@ -23,15 +23,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
-    private val weatherRepository: WeatherRepository,
-    private val cityRepository: CityRepository
+    private val getCurrentWeather: GetCurrentWeatherUseCase,
+    private val getDailyWeather: GetDailyWeatherUseCase,
+    private val getDailyWeatherList: GetDailyWeatherListUseCase,
+    private val getCityWeather: GetCityWeatherUseCase,
+    private val saveLastCity: SaveLastCityUseCase
 ) : ViewModel() {
-
-    private val getCurrentWeather = GetCurrentWeatherUseCase(weatherRepository)
-    private val getDailyWeather = GetDailyWeatherUseCase(weatherRepository)
-    private val getDailyWeatherList = GetDailyWeatherListUseCase(weatherRepository)
-    private val getCityWeather = GetCityWeatherUseCase(weatherRepository)
-    private val saveLastCity = SaveLastCityUseCase(cityRepository)
 
     private val _currentWeather = MutableLiveData<CurrentWeather>()
     val currentWeather: LiveData<CurrentWeather> = _currentWeather
