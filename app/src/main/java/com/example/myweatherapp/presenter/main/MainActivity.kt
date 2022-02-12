@@ -8,7 +8,9 @@ import com.example.myweatherapp.R
 import com.example.myweatherapp.domain.models.City
 import com.example.myweatherapp.presenter.search.SearchCityFragment
 import com.example.myweatherapp.presenter.weather.WeatherFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val viewModel by lazy { ViewModelProvider(this)[MainViewModel::class.java] }

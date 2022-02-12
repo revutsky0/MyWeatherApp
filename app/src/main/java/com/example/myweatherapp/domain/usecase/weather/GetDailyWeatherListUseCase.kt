@@ -1,7 +1,8 @@
 package com.example.myweatherapp.domain.usecase.weather
 
 import com.example.myweatherapp.domain.repository.WeatherRepository
+import javax.inject.Inject
 
-class GetDailyWeatherListUseCase(private val repository: WeatherRepository) {
+class GetDailyWeatherListUseCase @Inject constructor(private val repository: WeatherRepository) {
     suspend operator fun invoke() = repository.getDailyWeatherList()
 }

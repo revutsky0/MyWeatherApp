@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.myweatherapp.R
 import com.example.myweatherapp.databinding.FragmentDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
     private var id: Long = 0L
     private val viewModel by lazy { ViewModelProvider(this)[DetailViewModel::class.java] }

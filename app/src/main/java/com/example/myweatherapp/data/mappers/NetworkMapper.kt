@@ -15,8 +15,9 @@ import com.example.myweatherapp.domain.models.LocalNames
 import com.google.gson.Gson
 import org.json.JSONObject
 import java.util.*
+import javax.inject.Inject
 
-class NetworkMapper {
+class NetworkMapper @Inject constructor() {
 
     private val calendar = Calendar.getInstance()
 

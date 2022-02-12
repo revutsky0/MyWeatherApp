@@ -15,23 +15,13 @@ import com.example.myweatherapp.data.database.converters.WeatherConverter
     exportSchema = false
 )
 @TypeConverters(WeatherConverter::class)
-abstract class WeatherDatabase : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         private const val DB_NAME = "WeatherDatabase.db"
         private val LOCK = Any()
-        private var database: WeatherDatabase? = null
+        private var database: AppDatabase? = null
 
-        fun getInstance(context: Context): WeatherDatabase {
-            synchronized(LOCK) {
-                database?.let { return it }
-                val instance =
-                    Room.databaseBuilder(context, WeatherDatabase::class.java, DB_NAME)
-                        .fallbackToDestructiveMigration().build()
-                database = instance
-                return instance
-            }
-        }
     }
 
     abstract fun dao(): WeatherDao

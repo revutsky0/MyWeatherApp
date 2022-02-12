@@ -1,26 +1,31 @@
 package com.example.myweatherapp.data.repository
 
 import android.app.Application
+import android.content.Context
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
-import com.example.myweatherapp.data.database.WeatherDatabase
+import com.example.myweatherapp.data.database.AppDatabase
 import com.example.myweatherapp.data.mappers.WeatherMapper
 import com.example.myweatherapp.data.workers.LoadWeatherWorker
 import com.example.myweatherapp.domain.models.CurrentWeather
 import com.example.myweatherapp.domain.models.DailyWeather
 import com.example.myweatherapp.domain.models.DailyWeatherListItem
 import com.example.myweatherapp.domain.repository.WeatherRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class WeatherRepositoryImpl(application: Application) : WeatherRepository {
+class WeatherRepositoryImpl @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val database : AppDatabase,
+    private val mapper : WeatherMapper,
+    private val manager: WorkManager
+) : WeatherRepository {
 
-    private val database = WeatherDatabase.getInstance(application)
-    private val mapper = WeatherMapper()
-    private val manager = WorkManager.getInstance(application)
     private val workDelay = 10000L
 
     override suspend fun getCurrentWeather(): CurrentWeather? {
         val dbModel = database.dao().getCurrentWeather()
-        return if (dbModel!=null) {
+        return if (dbModel != null) {
             mapper.currentFromDbToDomain(dbModel)
         } else {
             null
