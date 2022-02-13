@@ -1,8 +1,11 @@
 package com.example.myweatherapp.presenter.main
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.myweatherapp.R
 import com.example.myweatherapp.domain.models.City
@@ -18,6 +21,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+//        if (!checkPermission()) {
+//            requestPermissions()
+//        }
         val lastCity = viewModel.getLastCity()
         if (lastCity == null) {
             launchSearchFragment()
@@ -33,4 +39,9 @@ class MainActivity : AppCompatActivity() {
     private fun launchSearchFragment() = supportFragmentManager.beginTransaction()
         .add(R.id.mainActivityFCV, SearchCityFragment.newInstance())
         .commit()
+
+    companion object {
+        const val REQUEST_PERMISSIONS_CODE = 123321
+    }
+
 }

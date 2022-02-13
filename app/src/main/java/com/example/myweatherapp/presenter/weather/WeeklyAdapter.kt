@@ -55,4 +55,6 @@ class WeeklyAdapter : RecyclerView.Adapter<WeeklyAdapter.WeeklyWeatherViewHolder
             }
         }
     }
+
+
 }

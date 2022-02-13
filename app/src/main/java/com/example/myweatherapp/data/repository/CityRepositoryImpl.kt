@@ -1,14 +1,13 @@
 package com.example.myweatherapp.data.repository
 
 import android.content.Context
+import android.location.Location
 import com.example.myweatherapp.data.mappers.NetworkMapper
 import com.example.myweatherapp.data.network.api.ApiFactory
 import com.example.myweatherapp.domain.models.City
 import com.example.myweatherapp.domain.repository.CityRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
-import org.json.JSONException
 import org.json.JSONObject
-import java.lang.Exception
 import javax.inject.Inject
 
 class CityRepositoryImpl @Inject constructor(
@@ -65,4 +64,10 @@ class CityRepositoryImpl @Inject constructor(
             .putString(CITY_PARAM_LOCAL_NAMES, city.localNames.toString())
             .apply()
     }
+
+    override suspend fun getCityFromLocation(location: Location): List<City> =
+        ApiFactory.apiService.getCityListByLocation(
+            lat = location.latitude.toFloat(),
+            lon = location.longitude.toFloat()
+        ).map { mapper.cityToModel(it) }
 }

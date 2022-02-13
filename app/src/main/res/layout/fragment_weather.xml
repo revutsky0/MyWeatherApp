@@ -215,9 +215,10 @@
 
         <ImageButton
             android:id="@+id/weatherSearchButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="?android:attr/actionModeWebSearchDrawable"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@color/card_view_bg"
+            android:src="@drawable/search_dark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.myweatherapp.R
 import com.example.myweatherapp.databinding.FragmentWeatherBinding
@@ -19,8 +20,10 @@ import java.util.*
 @AndroidEntryPoint
 class WeatherFragment : Fragment() {
 
-    private lateinit var binding: FragmentWeatherBinding
-    private val viewModel by lazy { ViewModelProvider(this)[WeatherViewModel::class.java] }
+    private var _binding: FragmentWeatherBinding? = null
+    private val binding: FragmentWeatherBinding
+        get() = _binding!!
+    private val viewModel: WeatherViewModel by viewModels()
     private val adapter: WeeklyAdapter by lazy { WeeklyAdapter() }
     private var currentBackground = R.drawable.clouds_bg
     private var id = 0L
@@ -29,31 +32,17 @@ class WeatherFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentWeatherBinding.inflate(inflater, container, false)
+    ): View {
+        _binding = FragmentWeatherBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    companion object {
-
-        private const val PARAM_CITY = "city"
-
-        @JvmStatic
-        fun newInstance(city: City) =
-            WeatherFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(PARAM_CITY, city)
-                }
-            }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         city = arguments?.getSerializable(PARAM_CITY) as City
-        viewModel.loadCityWeather(city)
-        setOnClickListeners()
         setObservable()
+        setOnClickListeners()
+        viewModel.loadCityWeather(city)
     }
 
     private fun setOnClickListeners() {
@@ -114,6 +103,25 @@ class WeatherFragment : Fragment() {
             .replace(R.id.mainActivityFCV, SearchCityFragment.newInstance())
             .commit()
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    companion object {
+
+        private const val PARAM_CITY = "city"
+
+        @JvmStatic
+        fun newInstance(city: City) =
+            WeatherFragment().apply {
+                arguments = Bundle().apply {
+                    putSerializable(PARAM_CITY, city)
+                }
+            }
+    }
+
 
 }
 

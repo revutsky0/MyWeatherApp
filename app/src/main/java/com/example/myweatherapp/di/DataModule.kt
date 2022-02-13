@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.work.WorkManager
 import com.example.myweatherapp.data.database.AppDatabase
+import com.example.myweatherapp.data.database.WeatherDao
 import com.example.myweatherapp.data.mappers.NetworkMapper
 import com.example.myweatherapp.data.mappers.WeatherMapper
 import com.example.myweatherapp.data.repository.CityRepositoryImpl
@@ -13,37 +14,22 @@ import com.example.myweatherapp.domain.repository.WeatherRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
-object AppModule {
-
-    @Singleton
-    @Provides
-    fun provideWeatherDatabase(
-        @ApplicationContext applicationContext: Context
-    ): AppDatabase {
-        return Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java,
-            "WeatherDatabase"
-        ).build()
-    }
-
-    @Provides
-    fun provideWeatherDao(database: AppDatabase) = database.dao()
+@InstallIn(ViewModelComponent::class)
+class DataModule {
 
     @Provides
     fun provideWeatherRepository(
-        @ApplicationContext context: Context,
-        database: AppDatabase,
+        dao: WeatherDao,
         mapper: WeatherMapper,
         manager: WorkManager
     ): WeatherRepository {
-        return WeatherRepositoryImpl(context, database, mapper, manager)
+        return WeatherRepositoryImpl(dao, mapper, manager)
     }
 
     @Provides
