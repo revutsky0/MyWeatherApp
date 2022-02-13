@@ -1,6 +1,7 @@
 package com.example.myweatherapp.data.repository
 
 import android.content.Context
+import android.location.Location
 import com.example.myweatherapp.data.mappers.NetworkMapper
 import com.example.myweatherapp.data.network.api.ApiFactory
 import com.example.myweatherapp.domain.models.City
@@ -64,5 +65,9 @@ class CityRepositoryImpl @Inject constructor(
             .putFloat(CITY_PARAM_LON, city.lon)
             .putString(CITY_PARAM_LOCAL_NAMES, city.localNames.toString())
             .apply()
+    }
+
+    override fun getCityFromLocation(location: Location) {
+
     }
 }
