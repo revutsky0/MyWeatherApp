@@ -3,8 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Mobile/MyWeatherApp/app/src/main/res/layout/fragment_search_city.xml" value="0.67" />
-        <entry key="..\:/Mobile/MyWeatherApp/app/src/main/res/layout/fragment_weather.xml" value="0.19791666666666666" />
+        <entry key="..\:/Mobile/MyWeatherApp/app/src/main/res/drawable/cloud.xml" value="0.10833333333333334" />
+        <entry key="..\:/Mobile/MyWeatherApp/app/src/main/res/drawable/fog_bg.xml" value="0.10833333333333334" />
+        <entry key="..\:/Mobile/MyWeatherApp/app/src/main/res/drawable/rain_bg.xml" value="0.10833333333333334" />
+        <entry key="..\:/Mobile/MyWeatherApp/app/src/main/res/drawable/snowfall_bg.xml" value="0.10833333333333334" />
+        <entry key="..\:/Mobile/MyWeatherApp/app/src/main/res/drawable/sunny_bg.xml" value="0.10833333333333334" />
+        <entry key="..\:/Mobile/MyWeatherApp/app/src/main/res/drawable/thunderstorm_bg.xml" value="0.10833333333333334" />
+        <entry key="..\:/Mobile/MyWeatherApp/app/src/main/res/layout/fragment_search_city.xml" value="0.12286158631415241" />
+        <entry key="..\:/Mobile/MyWeatherApp/app/src/main/res/layout/fragment_weather.xml" value="0.33" />
         <entry key="..\:/Mobile/MyWeatherApp/app/src/main/res/layout/search_city_list_item.xml" value="0.33" />
       </map>
     </option>

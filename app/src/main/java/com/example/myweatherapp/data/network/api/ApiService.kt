@@ -17,6 +17,7 @@ interface ApiService {
         const val ENDPOINT_ONE_CALL = URL_DATA + "onecall"
         const val ENDPOINT_CURRENT = URL_DATA + "weather"
         const val ENDPOINT_COORDINATES = "geo/1.0/direct"
+        const val ENDPOINT_LOCATION = "geo/1.0/reverse"
 
         // PARAMS NAME
         const val PARAM_NAME_API_KEY = "appid"
@@ -65,5 +66,13 @@ interface ApiService {
         @Query(PARAM_NAME_UNITS) units: String = PARAM_UNITS_METRIC,
         @Query(PARAM_NAME_API_KEY) apiKey: String = API_KEY
     ): DataOneCall
+
+    @GET(ENDPOINT_LOCATION)
+    suspend fun getCityListByLocation(
+        @Query(PARAM_NAME_LATITUDE) lat: Float,
+        @Query(PARAM_NAME_LONGITUDE) lon: Float,
+        @Query(PARAM_NAME_LIMIT) limit: Int = PARAM_LIMIT_CITY,
+        @Query(PARAM_NAME_API_KEY) apiKey: String = API_KEY
+    ): List<DataCity>
 
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.location.Location
 import com.example.myweatherapp.data.mappers.NetworkMapper
 import com.example.myweatherapp.data.network.api.ApiFactory
+import com.example.myweatherapp.data.network.api.ApiService
 import com.example.myweatherapp.domain.models.City
 import com.example.myweatherapp.domain.repository.CityRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -67,7 +68,9 @@ class CityRepositoryImpl @Inject constructor(
             .apply()
     }
 
-    override fun getCityFromLocation(location: Location) {
-
-    }
+    override suspend fun getCityFromLocation(location: Location): List<City> =
+        ApiFactory.apiService.getCityListByLocation(
+            lat = location.latitude.toFloat(),
+            lon = location.longitude.toFloat()
+        ).map { mapper.cityToModel(it) }
 }

@@ -2,10 +2,7 @@ package com.example.myweatherapp.di
 
 import com.example.myweatherapp.domain.repository.CityRepository
 import com.example.myweatherapp.domain.repository.WeatherRepository
-import com.example.myweatherapp.domain.usecase.city.GetCityListUseCase
-import com.example.myweatherapp.domain.usecase.city.GetCityWeatherUseCase
-import com.example.myweatherapp.domain.usecase.city.LoadLastCityUseCase
-import com.example.myweatherapp.domain.usecase.city.SaveLastCityUseCase
+import com.example.myweatherapp.domain.usecase.city.*
 import com.example.myweatherapp.domain.usecase.weather.GetCurrentWeatherUseCase
 import com.example.myweatherapp.domain.usecase.weather.GetDailyWeatherListUseCase
 import com.example.myweatherapp.domain.usecase.weather.GetDailyWeatherUseCase
@@ -17,7 +14,6 @@ import dagger.hilt.android.components.ViewModelComponent
 @Module
 @InstallIn(ViewModelComponent::class)
 class DomainModule {
-
 
 
     @Provides
@@ -53,5 +49,10 @@ class DomainModule {
     @Provides
     fun provideGetDailyWeatherUseCase(repository: WeatherRepository): GetDailyWeatherUseCase {
         return GetDailyWeatherUseCase(repository)
+    }
+
+    @Provides
+    fun provideGetCityFromLocationUseCase(repository: CityRepository): GetCityFromLocationUseCase {
+        return GetCityFromLocationUseCase(repository)
     }
 }

@@ -7,11 +7,13 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.getSystemService
@@ -44,6 +46,16 @@ class SearchCityFragment : Fragment(), LocationListener {
         ) as LocationManager
     }
 
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                getLocation()
+            }
+        }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,57 +67,15 @@ class SearchCityFragment : Fragment(), LocationListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.searchCityList.adapter = listAdapter
-        if (!checkPermission()) {
-            requestPermissions()
-        } else {
-
+        if (viewModel.needToGetLocationOnStartFragment()) {
+            getLocation()
         }
         setOnClickListeners()
         setObservable()
     }
 
-    private fun checkPermission() =
-        (ActivityCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED)
-
-    private fun requestPermissions() {
-        ActivityCompat.requestPermissions(
-            requireActivity(),
-            arrayOf(
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ),
-            MainActivity.REQUEST_PERMISSIONS_CODE
-        )
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == MainActivity.REQUEST_PERMISSIONS_CODE) {
-            if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-
-            } else {
-
-            }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-
-    private fun getCityFromLocation() {
-
-    }
-
-    private fun setOnClickListeners() {
-        binding.searchButton.setOnClickListener {
+    private fun setOnClickListeners() = with(binding) {
+        searchButton.setOnClickListener {
             val cityName = binding.searchCityName.text.toString()
             if (cityName.isEmpty()) {
                 sendToast("Строка поиска пустая!")
@@ -113,14 +83,21 @@ class SearchCityFragment : Fragment(), LocationListener {
                 viewModel.searchCity(cityName)
             }
         }
-        binding.searchCityList.setOnItemClickListener { _, _, position, _ ->
+        searchCityList.setOnItemClickListener { _, _, position, _ ->
             val city = listAdapter.getItem(position) ?: return@setOnItemClickListener
             launchWeatherFragment(city)
         }
+        locationButton.setOnClickListener {
+            getLocation()
+        }
     }
+
 
     private fun setObservable() {
         viewModel.cityList.observe(viewLifecycleOwner, {
+            if (it.size == 1) {
+                launchWeatherFragment(it[0])
+            }
             listAdapter.clear()
             listAdapter.addAll(it)
         })
@@ -148,29 +125,40 @@ class SearchCityFragment : Fragment(), LocationListener {
 
     // region Location Listener methods
 
-    @SuppressLint("MissingPermission")
     private fun getLocation() {
-        manager.requestLocationUpdates(
-            LocationManager.GPS_PROVIDER,
-            0,
-            0f,
-            this
-        )
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            manager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                10,
+                0f,
+                this
+            )
+            log("LISTENER START")
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+        }
     }
 
     override fun onLocationChanged(location: Location) {
-        //viewModel.
+        viewModel.searchCity(location)
+        log("lat = ${location.latitude}, lon = ${location.longitude}")
+        manager.removeUpdates(this)
     }
 
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
         //
     }
 
-    private fun stopListing() {
-        manager.removeUpdates(this)
-    }
-
     // endregion
+
+    private fun log(text: String) = Log.d("MAIN", text)
+
+    private fun toast(text: String) =
+        Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
 
     companion object {
         @JvmStatic
