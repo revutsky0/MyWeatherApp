@@ -13,28 +13,14 @@ import com.example.myweatherapp.domain.repository.WeatherRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
-object AppModule {
-
-    @Singleton
-    @Provides
-    fun provideWeatherDatabase(
-        @ApplicationContext applicationContext: Context
-    ): AppDatabase {
-        return Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java,
-            "WeatherDatabase"
-        ).build()
-    }
-
-    @Provides
-    fun provideWeatherDao(database: AppDatabase) = database.dao()
+@InstallIn(ViewModelComponent::class)
+class DataModule {
 
     @Provides
     fun provideWeatherRepository(
@@ -53,6 +39,9 @@ object AppModule {
     ): CityRepository {
         return CityRepositoryImpl(context, mapper)
     }
+
+    @Provides
+    fun provideWeatherDao(database: AppDatabase) = database.dao()
 
     @Provides
     fun provideWorkManager(@ApplicationContext context: Context): WorkManager {

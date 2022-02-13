@@ -21,6 +21,9 @@ interface WeatherDao {
     @Query("DELETE FROM weather_current")
     suspend fun deleteCurrentWeather()
 
+    @Query("DELETE FROM weather_daily WHERE dt < :dt ")
+    suspend fun deleteOldCurrent(dt: Long)
+
     //endregion
 
     //region WEATHER_DAILY
@@ -45,6 +48,9 @@ interface WeatherDao {
 
     @Query("SELECT COUNT(*) FROM weather_daily")
     suspend fun getWeatherDailyCount(): Int
+
+    @Query("DELETE FROM weather_daily WHERE dt < :dt")
+    suspend fun deleteOldDaily(dt: Long)
 
     //endregion
 

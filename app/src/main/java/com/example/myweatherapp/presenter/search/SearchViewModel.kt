@@ -1,17 +1,11 @@
 package com.example.myweatherapp.presenter.search
 
-import android.app.Application
-import android.view.View
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.myweatherapp.data.repository.CityRepositoryImpl
 import com.example.myweatherapp.domain.models.City
-import com.example.myweatherapp.domain.repository.CityRepository
 import com.example.myweatherapp.domain.usecase.city.GetCityListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

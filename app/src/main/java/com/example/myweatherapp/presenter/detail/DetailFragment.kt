@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.myweatherapp.R
 import com.example.myweatherapp.databinding.FragmentDetailBinding
@@ -12,11 +13,14 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
+    private var _binding: FragmentDetailBinding? = null
+    private val binding: FragmentDetailBinding
+        get() = _binding!!
     private var id: Long = 0L
-    private val viewModel by lazy { ViewModelProvider(this)[DetailViewModel::class.java] }
+    //private val viewModel: DetailViewModel by viewModels()
+    private val viewModel: DetailViewModel by lazy { ViewModelProvider(this)[DetailViewModel::class.java] }
     private val pressureUnits by lazy { this.getString(R.string.wind_speed_units) }
     private val windUnits by lazy { this.getString(R.string.pressure_units) }
-    private lateinit var binding: FragmentDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +37,7 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -56,6 +60,11 @@ class DetailFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

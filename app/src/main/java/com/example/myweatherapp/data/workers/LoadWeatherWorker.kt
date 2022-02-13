@@ -10,19 +10,25 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.example.myweatherapp.data.database.AppDatabase
+import com.example.myweatherapp.data.database.WeatherDao
 import com.example.myweatherapp.data.mappers.NetworkMapper
 import com.example.myweatherapp.data.network.api.ApiFactory
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
+import java.util.*
 import javax.inject.Inject
 
 @HiltWorker
 class LoadWeatherWorker @AssistedInject constructor(
     @Assisted private val appContext: Context,
     @Assisted params: WorkerParameters,
-    private val database: AppDatabase,
-    private val mapper: NetworkMapper) :
+    //private val database: AppDatabase,
+    private val dao: WeatherDao,
+    private val mapper: NetworkMapper
+) :
     CoroutineWorker(
         appContext,
         params
@@ -55,17 +61,26 @@ class LoadWeatherWorker @AssistedInject constructor(
         val lat = inputData.getFloat(LAT_PARAM, 0f)
         val lon = inputData.getFloat(LON_PARAM, 0f)
         val delay = inputData.getLong(DELAY_PARAM, 5000)
+        val currentTime = Calendar.getInstance().timeInMillis
+//        dao.deleteOldCurrent(currentTime)
+//        dao.deleteOldDaily(currentTime)
         while (true) {
             if (!isInternetAvailable()) {
                 break
             }
             val data = ApiFactory.apiService.getWeather(lat, lon)
-            val daily = data.daily?.map { mapper.dailyToDbModel(it) }
+            val daily = data.daily?.map {
+                mapper.dailyToDbModel(it)
+            }
             val current = if (data.current != null) {
                 mapper.currentToDbModel(data.current)
             } else null
-            daily?.let { database.dao().insertDailyWeather(daily) }
-            current?.let { database.dao().insertCurrentWeather(current) }
+            daily?.let {
+                dao.insertDailyWeather(daily)
+            }
+            current?.let {
+                dao.insertCurrentWeather(current)
+            }
             Log.d("MAIN", "WORKER ITERATION IS COMPLETE")
             delay(delay)
         }

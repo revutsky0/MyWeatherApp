@@ -7,8 +7,6 @@ import com.example.myweatherapp.domain.models.City
 import com.example.myweatherapp.domain.models.CurrentWeather
 import com.example.myweatherapp.domain.models.DailyWeather
 import com.example.myweatherapp.domain.models.DailyWeatherListItem
-import com.example.myweatherapp.domain.repository.CityRepository
-import com.example.myweatherapp.domain.repository.WeatherRepository
 import com.example.myweatherapp.domain.usecase.city.GetCityWeatherUseCase
 import com.example.myweatherapp.domain.usecase.city.SaveLastCityUseCase
 import com.example.myweatherapp.domain.usecase.weather.GetCurrentWeatherUseCase

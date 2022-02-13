@@ -8,6 +8,12 @@ import androidx.room.TypeConverters
 import com.example.myweatherapp.data.database.dbmodels.CurrentWeatherDbModel
 import com.example.myweatherapp.data.database.dbmodels.DailyWeatherDbModel
 import com.example.myweatherapp.data.database.converters.WeatherConverter
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Database(
     entities = [DailyWeatherDbModel::class, CurrentWeatherDbModel::class],
