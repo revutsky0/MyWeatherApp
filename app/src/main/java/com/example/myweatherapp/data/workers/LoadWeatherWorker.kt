@@ -2,30 +2,24 @@ package com.example.myweatherapp.data.workers
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
-import com.example.myweatherapp.data.database.AppDatabase
 import com.example.myweatherapp.data.database.WeatherDao
 import com.example.myweatherapp.data.mappers.NetworkMapper
 import com.example.myweatherapp.data.network.api.ApiFactory
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
 import java.util.*
-import javax.inject.Inject
 
 @HiltWorker
 class LoadWeatherWorker @AssistedInject constructor(
     @Assisted private val appContext: Context,
     @Assisted params: WorkerParameters,
-    //private val database: AppDatabase,
     private val dao: WeatherDao,
     private val mapper: NetworkMapper
 ) :
@@ -61,9 +55,9 @@ class LoadWeatherWorker @AssistedInject constructor(
         val lat = inputData.getFloat(LAT_PARAM, 0f)
         val lon = inputData.getFloat(LON_PARAM, 0f)
         val delay = inputData.getLong(DELAY_PARAM, 5000)
-        val currentTime = Calendar.getInstance().timeInMillis
-//        dao.deleteOldCurrent(currentTime)
-//        dao.deleteOldDaily(currentTime)
+        val minTime = getMinTime()
+        dao.deleteOldCurrent(minTime)
+        dao.deleteOldDaily(minTime)
         while (true) {
             if (!isInternetAvailable()) {
                 break
@@ -85,6 +79,15 @@ class LoadWeatherWorker @AssistedInject constructor(
             delay(delay)
         }
         return Result.success()
+    }
+
+    private fun getMinTime() : Long {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.MILLISECOND, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        return (calendar.timeInMillis / 1000L)
     }
 
     private fun isInternetAvailable() = true

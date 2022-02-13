@@ -25,6 +25,7 @@ import com.example.myweatherapp.domain.models.City
 import com.example.myweatherapp.presenter.main.MainActivity
 import com.example.myweatherapp.presenter.weather.WeatherFragment
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.processor.internal.definecomponent.codegen._dagger_hilt_android_internal_builders_ViewComponentBuilder
 
 @AndroidEntryPoint
 class SearchCityFragment : Fragment(), LocationListener {
@@ -81,6 +82,7 @@ class SearchCityFragment : Fragment(), LocationListener {
                 sendToast("Строка поиска пустая!")
             } else {
                 viewModel.searchCity(cityName)
+                binding.searchProgressBar.visibility = View.VISIBLE
             }
         }
         searchCityList.setOnItemClickListener { _, _, position, _ ->
@@ -98,6 +100,7 @@ class SearchCityFragment : Fragment(), LocationListener {
             if (it.size == 1) {
                 launchWeatherFragment(it[0])
             }
+            binding.searchProgressBar.visibility = View.INVISIBLE
             listAdapter.clear()
             listAdapter.addAll(it)
         })
@@ -137,6 +140,7 @@ class SearchCityFragment : Fragment(), LocationListener {
                 0f,
                 this
             )
+            binding.searchProgressBar.visibility = View.VISIBLE
             log("LISTENER START")
         } else {
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -147,6 +151,7 @@ class SearchCityFragment : Fragment(), LocationListener {
         viewModel.searchCity(location)
         log("lat = ${location.latitude}, lon = ${location.longitude}")
         manager.removeUpdates(this)
+        binding.searchProgressBar.visibility = View.INVISIBLE
     }
 
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
