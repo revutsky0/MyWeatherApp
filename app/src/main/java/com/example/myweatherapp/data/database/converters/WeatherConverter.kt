@@ -4,7 +4,6 @@ import androidx.room.TypeConverter
 import com.example.myweatherapp.data.database.dbmodels.TempDb
 import com.example.myweatherapp.data.database.dbmodels.WeatherDetailsDb
 import com.example.myweatherapp.data.network.pojo.oneCall.FeelsLike
-import com.example.myweatherapp.data.network.pojo.oneCall.Temp
 import com.google.gson.Gson
 import org.json.JSONArray
 

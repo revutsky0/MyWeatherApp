@@ -28,14 +28,11 @@ class WeatherViewModel @Inject constructor(
     private val saveLastCity: SaveLastCityUseCase
 ) : ViewModel() {
 
-    private val _currentWeather = MutableLiveData<CurrentWeather>()
-    val currentWeather: LiveData<CurrentWeather> = _currentWeather
 
-    private val _currentDailyWeather = MutableLiveData<DailyWeather>()
-    val currentDailyWeather: LiveData<DailyWeather> = _currentDailyWeather
+    val currentWeather: LiveData<CurrentWeather> = getCurrentWeather()
+    val currentDailyWeather: LiveData<DailyWeather> = getDailyWeather()
+    val weeklyWeather: LiveData<List<DailyWeatherListItem>> = getDailyWeatherList()
 
-    private val _weeklyWeather = MutableLiveData<List<DailyWeatherListItem>>()
-    val weeklyWeather: LiveData<List<DailyWeatherListItem>> = _weeklyWeather
 
     private val scope = CoroutineScope(Dispatchers.IO)
 
@@ -49,14 +46,6 @@ class WeatherViewModel @Inject constructor(
     private suspend fun loadData(city: City) {
         saveLastCity(city)
         getCityWeather(city)
-        val current = getCurrentWeather()
-        current?.let {
-            val daily = getDailyWeather(current.id)
-            _currentWeather.postValue(it)
-            _currentDailyWeather.postValue(daily)
-        }
-        val dailyList = getDailyWeatherList()
-        _weeklyWeather.postValue(dailyList)
     }
 
     override fun onCleared() {

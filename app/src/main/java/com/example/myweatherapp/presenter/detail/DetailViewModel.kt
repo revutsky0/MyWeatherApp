@@ -16,14 +16,10 @@ class DetailViewModel @Inject constructor(
     private val getDailyWeather: GetDailyWeatherUseCase
 ) : ViewModel() {
 
-    private val _weather = MutableLiveData<DailyWeather>()
-    val weather: LiveData<DailyWeather> = _weather
+    lateinit var weather: LiveData<DailyWeather>
 
     fun getWeather(dt: Long) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val current = getDailyWeather(dt)
-            _weather.postValue(current)
-        }
+        weather = getDailyWeather.byDt(dt)
     }
 
 }

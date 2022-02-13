@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.work.WorkManager
 import com.example.myweatherapp.data.database.AppDatabase
+import com.example.myweatherapp.data.database.WeatherDao
 import com.example.myweatherapp.data.mappers.NetworkMapper
 import com.example.myweatherapp.data.mappers.WeatherMapper
 import com.example.myweatherapp.data.repository.CityRepositoryImpl
@@ -24,12 +25,11 @@ class DataModule {
 
     @Provides
     fun provideWeatherRepository(
-        @ApplicationContext context: Context,
-        database: AppDatabase,
+        dao: WeatherDao,
         mapper: WeatherMapper,
         manager: WorkManager
     ): WeatherRepository {
-        return WeatherRepositoryImpl(context, database, mapper, manager)
+        return WeatherRepositoryImpl(dao, mapper, manager)
     }
 
     @Provides
@@ -39,9 +39,6 @@ class DataModule {
     ): CityRepository {
         return CityRepositoryImpl(context, mapper)
     }
-
-    @Provides
-    fun provideWeatherDao(database: AppDatabase) = database.dao()
 
     @Provides
     fun provideWorkManager(@ApplicationContext context: Context): WorkManager {

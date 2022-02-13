@@ -4,5 +4,6 @@ import com.example.myweatherapp.domain.repository.WeatherRepository
 import javax.inject.Inject
 
 class GetDailyWeatherUseCase @Inject constructor(private val repository: WeatherRepository) {
-    suspend operator fun invoke(dt: Long) = repository.getDailyWeather(dt)
+    operator fun invoke() = repository.getDailyWeather()
+    fun byDt(dt: Long) = repository.getDailyWeatherByDt(dt)
 }
