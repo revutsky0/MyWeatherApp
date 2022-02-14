@@ -29,8 +29,8 @@ class WeatherViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    val currentWeather: LiveData<CurrentWeather> = getCurrentWeather()
-    val currentDailyWeather: LiveData<DailyWeather> = getDailyWeather()
+    val currentWeather: LiveData<CurrentWeather?> = getCurrentWeather()
+    val currentDailyWeather: LiveData<DailyWeather?> = getDailyWeather()
     val weeklyWeather: LiveData<List<DailyWeatherListItem>> = getDailyWeatherList()
 
 

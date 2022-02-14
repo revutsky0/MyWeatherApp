@@ -21,10 +21,12 @@ class WeatherRepositoryImpl @Inject constructor(
 
     private val workDelay = 10000L
 
-    override fun getCurrentWeather(): LiveData<CurrentWeather> {
+    override fun getCurrentWeather(): LiveData<CurrentWeather?> {
         return MediatorLiveData<CurrentWeather>().apply {
             addSource(dao.getCurrentWeather()) {
-                value = mapper.currentFromDbToDomain(it)
+                value = if (it != null) {
+                    mapper.currentFromDbToDomain(it)
+                } else null
             }
         }
     }
@@ -39,10 +41,12 @@ class WeatherRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getDailyWeather(): LiveData<DailyWeather> {
+    override fun getDailyWeather(): LiveData<DailyWeather?> {
         return MediatorLiveData<DailyWeather>().apply {
             addSource(dao.getDailyWeather()) {
-                value = mapper.dailyFromDbToDomain(it)
+                value = if (it != null) {
+                    mapper.dailyFromDbToDomain(it)
+                } else null
             }
         }
     }
