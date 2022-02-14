@@ -134,14 +134,16 @@ class SearchCityFragment : Fragment(), LocationListener {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            manager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER,
-                10,
-                0f,
-                this
-            )
-            binding.searchProgressBar.visibility = View.VISIBLE
-            log("LISTENER START")
+            if(manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                manager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    10,
+                    0f,
+                    this
+                )
+                binding.searchProgressBar.visibility = View.VISIBLE
+                log("LISTENER START")
+            } else toast("GPS выключен! Невозможно определить местоположение")
         } else {
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
         }
