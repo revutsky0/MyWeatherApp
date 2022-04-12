@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.myweatherapp.presenter.splash.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_searchCityFragment"
+            app:destination="@id/searchCityFragment"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+        <action
+            android:id="@+id/action_splashFragment_to_weatherFragment"
+            app:destination="@id/weatherFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchCityFragment"
+        android:name="com.example.myweatherapp.presenter.search.SearchCityFragment"
+        android:label="fragment_search_city"
+        tools:layout="@layout/fragment_search_city" />
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.myweatherapp.presenter.detail.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" />
+    <fragment
+        android:id="@+id/weatherFragment"
+        android:name="com.example.myweatherapp.presenter.weather.WeatherFragment"
+        android:label="fragment_weather"
+        tools:layout="@layout/fragment_weather" >
+        <action
+            android:id="@+id/action_weatherFragment_to_searchCityFragment"
+            app:destination="@id/searchCityFragment" />
+        <action
+            android:id="@+id/action_weatherFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <argument
+            android:name="city"
+            app:argType="com.example.myweatherapp.domain.models.City" />
+    </fragment>
+</navigation>
