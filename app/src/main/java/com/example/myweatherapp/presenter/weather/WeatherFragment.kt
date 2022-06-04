@@ -5,10 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import com.example.myweatherapp.R
 import com.example.myweatherapp.databinding.FragmentWeatherBinding
 import com.example.myweatherapp.domain.models.City
@@ -20,6 +19,7 @@ import java.util.*
 @AndroidEntryPoint
 class WeatherFragment : Fragment() {
 
+    private val args : WeatherFragmentArgs by navArgs()
     private var _binding: FragmentWeatherBinding? = null
     private val binding: FragmentWeatherBinding
         get() = _binding!!
@@ -27,7 +27,7 @@ class WeatherFragment : Fragment() {
     private val adapter: WeeklyAdapter by lazy { WeeklyAdapter() }
     private var currentBackground = R.drawable.clouds_bg
     private var id = 0L
-    private lateinit var city: City
+    private val city: City by lazy { args.city }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +39,6 @@ class WeatherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        city = arguments?.getSerializable(PARAM_CITY) as City
         setObservable()
         setOnClickListeners()
         viewModel.loadCityWeather(city)
@@ -93,14 +92,14 @@ class WeatherFragment : Fragment() {
 
     private fun launchDetailFragment(id: Long) {
         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.mainActivityFCV, DetailFragment.newInstance(id))
+            .replace(R.id.nav_host_fragment, DetailFragment.newInstance(id))
             .addToBackStack(null)
             .commit()
     }
 
     private fun launchSearchCityFragment() {
         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.mainActivityFCV, SearchCityFragment.newInstance())
+            .replace(R.id.nav_host_fragment, SearchCityFragment.newInstance())
             .commit()
     }
 
